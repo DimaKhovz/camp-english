@@ -93,8 +93,8 @@ html,body{height:100%;background:#070c18;overflow:hidden;color:var(--cream);
 .tile .badge{position:absolute;top:-7px;right:10px;font-size:10px;font-weight:800;letter-spacing:.06em;color:#2b1104;
   background:var(--ember-hi);border-radius:8px;padding:2px 6px}
 
-.slim{display:flex;align-items:center;gap:12px;padding:11px 14px;opacity:.82}
-.slim .ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;color:var(--muted);border:1px dashed rgba(255,244,224,.25)}
+.slim{display:flex;align-items:center;gap:12px;padding:11px 14px}
+.slim .ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;color:var(--ember-hi);background:linear-gradient(160deg,rgba(255,150,60,.22),rgba(255,120,40,.06));border:1px solid rgba(255,160,80,.28)}
 .slim .ic svg{width:17px;height:17px}
 .slim .lock{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
   border:1px solid rgba(255,244,224,.2);border-radius:10px;padding:4px 8px}
@@ -237,6 +237,117 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 @keyframes ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
 @keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
+/* ---------- shared bits for new sections ---------- */
+.scroll.nodock{padding-bottom:calc(var(--safe-bot) + 30px)}
+.scroll > *{flex-shrink:0}
+.label{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ember-hi)}
+.btnrow{display:flex;gap:10px}
+.bigbtn{flex:1;height:52px;border-radius:16px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;border:1px solid rgba(255,160,80,.35);
+  background:rgba(14,22,40,.7);color:var(--cream);display:flex;align-items:center;justify-content:center;gap:8px}
+.bigbtn.main{border:none;color:#2b1104;background:linear-gradient(180deg,#ffb257,#ff8a2a 50%,#e2531b);box-shadow:0 8px 22px rgba(255,110,30,.35)}
+.bigbtn:active{transform:scale(.97)}
+.empty{text-align:center;padding:40px 20px;color:var(--muted);font-weight:700;line-height:1.5}
+.empty b{display:block;font-size:44px;margin-bottom:10px}
+.tile .badge.ok{background:#9ef0b4}
+.qwords{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.qwords span{font-size:12.5px;font-weight:800;padding:5px 9px;border-radius:10px;background:rgba(255,150,60,.16);border:1px solid rgba(255,160,80,.35);color:var(--cream)}
+.qwords span.used{background:rgba(120,230,150,.18);border-color:rgba(120,230,150,.5)}
+
+/* quest */
+.questcard{position:relative;overflow:hidden;border-radius:22px;padding:22px 18px 18px;text-align:center;
+  background:radial-gradient(120% 90% at 50% 0%,rgba(255,150,60,.28),rgba(255,120,40,.05) 60%),linear-gradient(180deg,rgba(18,28,50,.8),rgba(12,20,38,.75));
+  border:1px solid rgba(255,170,90,.4);box-shadow:0 12px 34px rgba(0,0,0,.35);animation:rise .5s both}
+.questcard .seal{width:74px;height:74px;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;font-size:36px;
+  background:radial-gradient(circle at 35% 30%,#ffe2b0,#ff9a3c 55%,#c8461a);box-shadow:0 0 0 6px rgba(255,160,80,.15),0 10px 30px rgba(255,110,30,.45)}
+.questcard h3{font-family:"Cinzel",serif;font-weight:900;font-size:26px;letter-spacing:.05em;margin:6px 0 8px;color:var(--cream)}
+.questcard p{font-size:16px;font-weight:700;line-height:1.45;color:rgba(255,244,224,.88)}
+.questcard .qwords{justify-content:center;margin-top:14px}
+.questcard .qwords span{font-size:14px;padding:7px 12px}
+.reward{display:inline-flex;margin-top:16px;gap:8px}
+.done-banner{margin-top:14px;padding:12px;border-radius:14px;background:rgba(120,230,150,.14);border:1px solid rgba(120,230,150,.45);font-weight:800;color:#c9f7d6}
+
+/* backpack */
+.seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:rgba(10,16,30,.6);border:1px solid rgba(255,255,255,.08);width:100%;max-width:400px;margin-top:14px;flex:none}
+.seg button{flex:1;height:36px;border-radius:10px;border:none;font:inherit;font-weight:800;font-size:13px;color:var(--muted);background:none;cursor:pointer}
+.seg button.on{background:linear-gradient(180deg,rgba(255,150,60,.3),rgba(255,120,40,.15));color:var(--cream)}
+.pane{display:none;width:100%;max-width:400px;flex:1;min-height:0;flex-direction:column}
+.pane.on{display:flex}
+.flash{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:10px 0 calc(var(--safe-bot) + 16px)}
+.fcount{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.1em}
+.fcard{width:100%;height:min(46vh,340px);perspective:1200px;cursor:pointer}
+.fcard .in{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.fcard.flip .in{transform:rotateY(180deg)}
+.fside{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;padding:22px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;
+  background:linear-gradient(180deg,rgba(22,32,58,.92),rgba(12,20,38,.9));border:1px solid rgba(255,170,90,.35);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.fside.back{transform:rotateY(180deg);background:radial-gradient(120% 80% at 50% 0%,rgba(255,150,60,.22),transparent 60%),linear-gradient(180deg,rgba(22,32,58,.95),rgba(12,20,38,.92))}
+.fside .ph{font-family:"Cinzel",serif;font-weight:900;font-size:clamp(26px,8vw,34px);line-height:1.15;color:var(--cream)}
+.fside .tap{font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.1em}
+.fside .mn{font-size:17px;font-weight:800;line-height:1.4}
+.fside .ru{font-size:16px;font-weight:700;color:var(--ember-hi)}
+.fside .ex{font-size:14px;font-weight:600;font-style:italic;color:var(--muted);line-height:1.45}
+.fbtns{display:flex;gap:10px;width:100%;visibility:hidden}
+.fcard.flip ~ .fbtns{visibility:visible}
+.wlist{flex:1;overflow-y:auto;padding:12px 0 calc(var(--safe-bot) + 24px);display:flex;flex-direction:column;gap:8px}
+.wrow{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:14px;background:rgba(14,22,40,.7);border:1px solid rgba(255,255,255,.07)}
+.wrow .dotst{width:9px;height:9px;border-radius:50%;flex:none;background:#8aa0c8}
+.wrow .dotst.learning{background:var(--ember)}.wrow .dotst.known{background:#7fe39b}
+.wrow .tx{flex:1;min-width:0}.wrow .tx b{display:block;font-size:15px;font-weight:800}.wrow .tx i{font-style:normal;font-size:12.5px;color:var(--muted);font-weight:600}
+.wrow .x{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:none;color:var(--muted);font-size:15px;cursor:pointer;flex:none}
+.wrow .x.arm{background:#c8401a;color:#fff;border:none;width:auto;padding:0 10px;border-radius:15px;font-size:12px;font-weight:800}
+.wrow .play{width:32px;height:32px}.wrow .play svg{width:15px;height:15px}
+.legend{display:flex;gap:14px;justify-content:center;font-size:11px;font-weight:800;color:var(--muted);padding-top:4px}
+.legend span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:#8aa0c8}
+.legend .l::before{background:var(--ember)}.legend .k::before{background:#7fe39b}
+
+/* trail */
+.rankcard{border-radius:22px;padding:18px;display:flex;gap:16px;align-items:center;
+  background:radial-gradient(100% 120% at 0% 0%,rgba(255,150,60,.25),transparent 60%),linear-gradient(180deg,rgba(18,28,50,.85),rgba(12,20,38,.8));border:1px solid rgba(255,170,90,.38);animation:rise .5s both}
+.rankcard .emb{width:70px;height:70px;border-radius:20px;display:grid;place-items:center;font-size:36px;flex:none;
+  background:radial-gradient(circle at 35% 30%,#ffe2b0,#ff9a3c 60%,#c8461a);box-shadow:0 10px 26px rgba(255,110,30,.4)}
+.rankcard .rk{font-family:"Cinzel",serif;font-weight:900;font-size:24px;letter-spacing:.04em}
+.rankcard .lv{font-size:12px;font-weight:800;color:var(--muted);margin:2px 0 8px}
+.rankcard .nx{font-size:11.5px;font-weight:700;color:var(--muted);margin-top:6px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{border-radius:16px;padding:13px 14px;background:rgba(14,22,40,.72);border:1px solid rgba(255,255,255,.07);animation:rise .5s both}
+.stat b{display:block;font-family:"Cinzel",serif;font-weight:900;font-size:26px;color:var(--ember-hi);line-height:1.1}
+.stat span{font-size:12px;font-weight:800;color:var(--muted)}
+.heat{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.heat .hd{font-size:10px;font-weight:800;color:var(--muted);text-align:center}
+.heat .c{height:24px;border-radius:7px;background:rgba(255,255,255,.05)}
+.heat .c.l1{background:rgba(255,138,42,.35)}.heat .c.l2{background:rgba(255,138,42,.65)}.heat .c.l3{background:#ff8a2a;box-shadow:0 0 10px rgba(255,140,50,.6)}
+.heat .c.fu{background:none;border:1px dashed rgba(255,255,255,.06)}.heat .c.td{outline:2px solid var(--ember-hi);outline-offset:1px}
+.ladder{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 6px}
+.ladder::-webkit-scrollbar{display:none}
+.rung{flex:none;padding:7px 10px;border-radius:12px;font-size:12px;font-weight:800;color:var(--muted);border:1px solid rgba(255,255,255,.1);white-space:nowrap}
+.rung.past{color:var(--cream);border-color:rgba(255,160,80,.35)}
+.rung.now{color:#2b1104;border:none;background:linear-gradient(180deg,#ffb257,#ff8a2a)}
+.hrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid rgba(255,255,255,.06);cursor:pointer}
+.hrow:first-of-type{border-top:none}
+.hrow .hi{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:17px;flex:none;background:rgba(255,150,60,.13);border:1px solid rgba(255,160,80,.25)}
+.hrow .ht{flex:1;min-width:0}.hrow .ht b{display:block;font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hrow .ht i{font-style:normal;font-size:12px;font-weight:600;color:var(--muted)}
+.hrow .hx{font-size:12px;font-weight:800;color:var(--ember-hi)}
+
+/* book */
+.bookintro{text-align:center;padding:26px 18px;border-radius:22px;background:linear-gradient(180deg,rgba(18,28,50,.8),rgba(12,20,38,.75));border:1px solid rgba(255,170,90,.3);animation:rise .5s both}
+.bookintro .bk{font-size:52px}
+.bookintro h3{font-family:"Cinzel",serif;font-weight:900;font-size:22px;margin:8px 0 6px}
+.bookintro p{font-size:14px;font-weight:600;color:var(--muted);line-height:1.5;margin-bottom:18px}
+.pagetext{font-size:16px;font-weight:600;line-height:1.65;white-space:pre-wrap}
+.ru-text{font-size:15px;font-weight:600;line-height:1.6;color:rgba(255,244,224,.85);white-space:pre-wrap;display:none}
+.ru-text.on{display:block}
+.toggle{background:none;border:none;color:var(--ember-hi);font:inherit;font-weight:800;font-size:13px;cursor:pointer;padding:0}
+.bw{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-top:1px solid rgba(255,255,255,.07)}
+.bw:first-of-type{border-top:none;padding-top:0}
+.bw .tx{flex:1}.bw .tx b{font-size:15px;font-weight:800}.bw .tx .r{font-size:13px;color:var(--ember-hi);font-weight:700;margin-left:6px}
+.bw .tx i{display:block;font-style:normal;font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.bw .add{height:32px;padding:0 12px;border-radius:16px;border:1px solid rgba(255,160,80,.4);background:rgba(255,150,60,.12);color:var(--cream);font:inherit;font-weight:800;font-size:12px;cursor:pointer;flex:none}
+.bw .add.ok{background:rgba(120,230,150,.18);border-color:rgba(120,230,150,.5);color:#c9f7d6}
+.dq{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid rgba(255,255,255,.07)}
+.dq:first-of-type{border-top:none;padding-top:0}
+.dq p{flex:1;font-size:15px !important;font-weight:700 !important}
+.dq button{height:34px;padding:0 12px;border-radius:12px;border:none;font:inherit;font-weight:800;font-size:13px;color:#2b1104;cursor:pointer;background:linear-gradient(180deg,#ffb257,#ff8a2a)}
 </style>
 </head>
 <body>
@@ -273,25 +384,26 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
         <span><div class="t">Write</div><div class="s">Писать текстом</div></span>
       </button>
-      <button class="btn tile" style="animation-delay:.3s" data-soon="Задание дня">
-        <span class="badge">NEW</span>
+      <button class="btn tile" style="animation-delay:.3s" data-go="quest">
+        <span class="badge" id="qBadge">+70 XP</span>
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></span>
         <span><div class="t">Daily Quest</div><div class="s">Задание дня</div></span>
       </button>
-      <button class="btn tile" style="animation-delay:.36s" data-soon="Словарь">
+      <button class="btn tile" style="animation-delay:.36s" data-go="backpack">
+        <span class="badge" id="bpBadge" style="display:none"></span>
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7V5a4 4 0 0 1 8 0v2"/><rect x="4" y="7" width="16" height="14" rx="4"/><path d="M4 13h16M10 13v3h4v-3"/></svg></span>
         <span><div class="t">Backpack</div><div class="s">Мой словарь</div></span>
       </button>
-      <button class="btn tile" style="animation-delay:.42s" data-soon="Прогресс">
+      <button class="btn tile" style="animation-delay:.42s" data-go="trail">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></span>
         <span><div class="t">Trail</div><div class="s">Путь и прогресс</div></span>
       </button>
     </div>
 
-    <button class="btn slim" style="animation-delay:.48s" data-soon="Книги — скоро">
+    <button class="btn slim" style="animation-delay:.48s" data-go="book">
       <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg></span>
-      <span><div class="t">Book Club</div><div class="s">Читать и переводить страницы</div></span>
-      <span class="lock">soon</span>
+      <span><div class="t">Book Club</div><div class="s">Фото страницы → перевод и слова</div></span>
+      <span class="lock" style="color:var(--ember-hi);border-color:rgba(255,160,80,.4)">📷</span>
     </button>
   </nav>
 
@@ -311,7 +423,7 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 <section class="view" id="speak">
   <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     <h2>SPEAK</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
-  <div class="prompt"><small class="js-plabel">Today's topic</small><p class="js-prompt">Tell me about your day.</p>
+  <div class="prompt"><small class="js-plabel">Today's topic</small><p class="js-prompt">Tell me about your day.</p><div class="qwords js-qwords"></div>
     <button class="shuffle js-shuffle">↻ another topic</button></div>
   <div class="rec">
     <div class="timer" id="timer"></div>
@@ -331,7 +443,7 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 <section class="view" id="write">
   <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     <h2>WRITE</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
-  <div class="prompt"><small class="js-plabel">Today's topic</small><p class="js-prompt">Tell me about your day.</p>
+  <div class="prompt"><small class="js-plabel">Today's topic</small><p class="js-prompt">Tell me about your day.</p><div class="qwords js-qwords"></div>
     <button class="shuffle js-shuffle">↻ another topic</button></div>
   <div class="writebox">
     <textarea id="wtext" placeholder="Write a few sentences in English…" maxlength="3000"></textarea>
@@ -348,6 +460,36 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
     <h2>RESULT</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
   <div class="scroll" id="rscroll"></div>
   <div class="dock"><button id="homeBtn">Back to camp</button></div>
+</section>
+
+<!-- ===== DAILY QUEST ===== -->
+<section class="view" id="quest">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2>QUEST</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
+  <div class="scroll nodock" id="qscroll"></div>
+</section>
+
+<!-- ===== BACKPACK ===== -->
+<section class="view" id="backpack">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2>BACKPACK</h2><span class="sp"></span><span class="pill">🎒 <b id="bpCount">0</b></span></div>
+  <div class="seg"><button class="on" data-pane="review">Review <span id="bpDue"></span></button><button data-pane="all">All words</button></div>
+  <div class="pane on" id="pane-review"></div>
+  <div class="pane" id="pane-all"></div>
+</section>
+
+<!-- ===== TRAIL ===== -->
+<section class="view" id="trail">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2>TRAIL</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
+  <div class="scroll nodock" id="tscroll"></div>
+</section>
+
+<!-- ===== BOOK CLUB ===== -->
+<section class="view" id="book">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2>BOOK CLUB</h2><span class="sp"></span></div>
+  <input type="file" id="bkCam" accept="image/*" capture="environment" hidden>
+  <input type="file" id="bkGal" accept="image/*" hidden>
+  <div class="scroll nodock" id="bscroll"></div>
+  <div class="rec" id="bbusy" style="display:none"><div class="think" style="display:flex"><svg class="bigflame" viewBox="0 0 34 40"><path fill="url(#fg2)" d="M17 1c2 7 9 10 9 20a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 3 4 4 4-1-5-1-9 1-13z"/><path fill="#fff1c9" opacity=".9" d="M17 21c1 3 4 4 4 8a4 4 0 0 1-8 0c0-3 2-4 2-6 1 1 1 1 2-2z"/></svg>
+    <p>Reading the page…</p><span>Text, translation and new words</span></div></div>
 </section>
 
 <div class="toast" id="toast"></div>
@@ -421,9 +563,10 @@ function setProgress(p){
     return `<div class="day${cls}"><div class="dot">${done?tick:""}</div>${d}</div>`;
   }).join("");
   heat = Math.min(1, .45 + s.streak * .08);
+  if (typeof updateBadges === "function") updateBadges();
 }
 setProgress({});
-api("/api/me").then(j => { setProgress(j.progress); if (j.name) document.getElementById("uname").textContent = j.name; })
+api("/api/me").then(j => { QUEST = j.quest || null; setProgress(j.progress); if (j.name) document.getElementById("uname").textContent = j.name; })
   .catch(e => { if (String(e.message) !== "no_api") console.log("me failed", e); });
 
 /* ================= navigation ================= */
@@ -449,6 +592,7 @@ document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", 
   haptic(b.classList.contains("primary") ? "medium" : "light");
   const id = b.dataset.go;
   if (id === "speak" || id === "write") setPrompt(null);
+  if (OPEN[id]) OPEN[id]();
   go(id);
   if (id === "write") setTimeout(() => document.getElementById("wtext").focus(), 350);
 }));
@@ -465,16 +609,19 @@ const TOPICS = [
   "If you could live in any country, where would it be?", "Tell me about your work or studies.",
   "What made you smile this week?"
 ];
-let promptText = TOPICS[0], promptIsQuestion = false;
-function setPrompt(question){
-  promptIsQuestion = !!question;
+let promptText = TOPICS[0], promptIsQuestion = false, questMode = null;
+function setPrompt(question, quest){
+  promptIsQuestion = !!question; questMode = quest || null;
   promptText = question || TOPICS[(new Date().getDate() + Math.floor(Math.random()*3)) % TOPICS.length];
   document.querySelectorAll(".js-prompt").forEach(e => e.textContent = promptText);
-  document.querySelectorAll(".js-plabel").forEach(e => e.textContent = question ? "Answer the question" : "Today's topic");
+  document.querySelectorAll(".js-plabel").forEach(e => e.textContent = quest ? "🎯 Daily quest" : question ? "Answer the question" : "Today's topic");
+  document.querySelectorAll(".js-qwords").forEach(e => e.innerHTML = quest ? quest.words.map(w => `<span>${esc(w)}</span>`).join("") : "");
+  document.querySelectorAll(".js-shuffle").forEach(e => e.style.display = quest ? "none" : "");
 }
+function analyzeQS(){ return "?prompt=" + encodeURIComponent(promptText.slice(0, 300)) + (questMode ? "&quest=1" : ""); }
 document.querySelectorAll(".js-shuffle").forEach(b => b.addEventListener("click", () => {
   haptic(); let t; do { t = TOPICS[Math.floor(Math.random()*TOPICS.length)]; } while (t === promptText);
-  promptIsQuestion = false; promptText = t;
+  promptIsQuestion = false; questMode = null; promptText = t;
   document.querySelectorAll(".js-prompt").forEach(e => e.textContent = t);
   document.querySelectorAll(".js-plabel").forEach(e => e.textContent = "Today's topic");
 }));
@@ -576,7 +723,7 @@ function busy(view, on){
 async function sendSpeech(blob){
   busy("speak", true);
   try {
-    const j = await api("/api/analyze", { method: "POST", headers: { "Content-Type": "audio/wav" }, body: blob });
+    const j = await api("/api/analyze" + analyzeQS(), { method: "POST", headers: { "Content-Type": "audio/wav" }, body: blob });
     busy("speak", false); showResult(j.result, j.progress);
   } catch(e) { busy("speak", false); toast(errText(e), 3200); notify("error"); }
 }
@@ -588,7 +735,7 @@ wtext.addEventListener("input", () => {
 wsend.addEventListener("click", async () => {
   haptic("medium"); wtext.blur(); busy("write", true);
   try {
-    const j = await api("/api/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: wtext.value }) });
+    const j = await api("/api/analyze" + analyzeQS(), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: wtext.value }) });
     busy("write", false); wtext.value = ""; wtext.dispatchEvent(new Event("input")); showResult(j.result, j.progress);
   } catch(e) { busy("write", false); toast(errText(e), 3200); notify("error"); }
 });
@@ -596,8 +743,8 @@ wsend.addEventListener("click", async () => {
 /* ================= results ================= */
 const speakerIcon = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 let lastQuestion = "";
-function showResult(r, p){
-  r = r || {};
+function showResult(r, p, opts){
+  r = r || {}; opts = opts || {};
   const prev = progressState.level;
   if (p) setProgress(p);
   lastQuestion = r.question || "";
@@ -605,7 +752,10 @@ function showResult(r, p){
   let h = `<div class="hero"><div class="emo">${esc(r.emojis || r.reaction || "🔥")}</div>
     <div class="praise">${esc(r.praise || "Great job!")}</div>
     <div class="gain">${p && p.gained ? `<span class="pill">+${p.gained} XP</span>` : ""}<span class="pill">🔥 ${progressState.streak} day${progressState.streak === 1 ? "" : "s"}</span>
-    ${p && p.level > prev ? `<span class="pill">⬆ Level ${p.level}</span>` : ""}</div></div>`;
+    ${p && p.level > prev ? `<span class="pill">⬆ Level ${p.level}</span>` : ""}
+    ${p && p.quest_completed ? `<span class="pill">🏆 Quest done</span>` : ""}
+    ${p && p.words_added && p.words_added.length ? `<span class="pill">🎒 +${p.words_added.length} words</span>` : ""}</div>
+    ${questMode && p && !p.quest_completed ? `<p style="margin-top:10px;font-size:13px;font-weight:700;color:var(--muted)">Quest not done yet — use more of the target words and try again!</p>` : ""}</div>`;
   if (r.transcript) h += card("You said", `<p class="said">“${esc(r.transcript)}”</p>`);
   const ms = Array.isArray(r.mistakes) ? r.mistakes : [];
   h += card(ms.length ? "Fix these" : "Mistakes", ms.length ? ms.map(m => `<div class="fix"><div class="w">${esc(m.wrong)}</div><div class="r">${esc(m.right)}</div>${m.why ? `<div class="y">${esc(m.why)}</div>` : ""}</div>`).join("")
@@ -622,8 +772,9 @@ function showResult(r, p){
   const a1 = document.getElementById("ansSpeak"), a2 = document.getElementById("ansWrite");
   a1 && a1.addEventListener("click", () => { haptic("medium"); setPrompt(lastQuestion); stack = ["home"]; show("speak"); });
   a2 && a2.addEventListener("click", () => { haptic(); setPrompt(lastQuestion); stack = ["home"]; show("write"); setTimeout(()=>wtext.focus(),350); });
-  notify("success");
-  stack = ["home"]; show("result");
+  if (p) { notify("success"); if (p.quest_completed && QUEST) QUEST.done = true; questMode = null; updateBadges(); }
+  document.querySelector("#result .dock").style.display = opts.from ? "none" : "";
+  stack = opts.from ? ["home", opts.from] : ["home"]; show("result");
 }
 
 /* ================= audio ================= */
@@ -643,11 +794,223 @@ async function playTTS(text, btn){
   } catch(e) { stopAudio(); toast(DEMO ? "В демо-режиме озвучки нет" : errText(e)); }
 }
 
+
+/* ================= new sections ================= */
+var OPEN = {};
+var QUEST = null;
+const playBtn = say => `<button class="play" data-say="${esc(say)}">${speakerIcon}</button>`;
+function wirePlays(root){ root.querySelectorAll(".play[data-say]").forEach(b => b.onclick = e => { e.stopPropagation(); playTTS(b.dataset.say, b); }); }
+function loading(el){ el.innerHTML = `<div class="empty"><b>🔥</b>Loading…</div>`; }
+function failed(el, e){ el.innerHTML = `<div class="empty"><b>🌧</b>${esc(errText(e))}</div>`; }
+function updateBadges(){
+  const s = progressState, bp = document.getElementById("bpBadge"), qb = document.getElementById("qBadge");
+  if (bp) { bp.style.display = s.due ? "" : "none"; bp.textContent = s.due + " to review"; }
+  if (qb) { const done = s.quest_done || (QUEST && QUEST.done); qb.textContent = done ? "✓ DONE" : "+" + ((QUEST && QUEST.reward) || 70) + " XP"; qb.classList.toggle("ok", !!done); }
+}
+
+/* ---------- Daily Quest ---------- */
+OPEN.quest = async () => {
+  const el = document.getElementById("qscroll"); loading(el);
+  try { const j = await api("/api/quest"); QUEST = j.quest; renderQuest(); }
+  catch(e) { failed(el, e); }
+};
+function renderQuest(){
+  const q = QUEST, el = document.getElementById("qscroll");
+  el.innerHTML = `<div class="questcard">
+      <div class="seal">${q.done ? "🏆" : "🎯"}</div>
+      <div class="label">Daily quest · ${new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long"})}</div>
+      <h3>${esc(q.title)}</h3><p>${esc(q.task)}</p>
+      <div class="label" style="margin-top:16px">${q.from_backpack ? "Use words from your backpack" : "Use today's power words"}</div>
+      <div class="qwords">${q.words.map(w => `<span data-say="${esc(w)}">${esc(w)}</span>`).join("")}</div>
+      <div class="reward"><span class="pill">+${q.reward} XP</span><span class="pill">🔥 keeps your streak</span></div>
+      ${q.done ? `<div class="done-banner">Quest complete! A new one appears tomorrow 🔥</div>` : ""}
+    </div>
+    <div class="btnrow"><button class="bigbtn main" id="qSpeak">🎙 Speak</button><button class="bigbtn" id="qWrite">✍️ Write</button></div>
+    <section class="card"><h3>How it works</h3><p style="font-size:14px;color:var(--muted)">Do the task out loud or in writing and use at least ${Math.max(1, q.words.length - 1)} of the ${q.words.length} words. Your coach checks them automatically.</p></section>`;
+  el.querySelectorAll(".qwords span").forEach(s => s.onclick = () => playTTS(s.dataset.say, null));
+  document.getElementById("qSpeak").onclick = () => { haptic("medium"); setPrompt(q.task, q.done ? null : q); stack = ["home","quest"]; show("speak"); };
+  document.getElementById("qWrite").onclick = () => { haptic(); setPrompt(q.task, q.done ? null : q); stack = ["home","quest"]; show("write"); setTimeout(()=>wtext.focus(),350); };
+}
+
+/* ---------- Backpack ---------- */
+let BP = { words: [], due: [] }, fIdx = 0;
+document.querySelectorAll(".seg button").forEach(b => b.onclick = () => {
+  haptic(); document.querySelectorAll(".seg button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll(".pane").forEach(p => p.classList.toggle("on", p.id === "pane-" + b.dataset.pane));
+});
+OPEN.backpack = async () => {
+  const r = document.getElementById("pane-review"); loading(r); document.getElementById("pane-all").innerHTML = "";
+  try { const j = await api("/api/backpack"); BP = j; fIdx = 0; if (j.summary) setProgress(j.summary); renderBackpack(); }
+  catch(e) { failed(r, e); }
+};
+function renderBackpack(){
+  document.getElementById("bpCount").textContent = BP.words.length;
+  document.getElementById("bpDue").textContent = BP.due.length ? `(${BP.due.length})` : "";
+  renderCard();
+  const all = document.getElementById("pane-all");
+  if (!BP.words.length) { all.innerHTML = `<div class="empty"><b>🎒</b>Your backpack is empty.<br>Words from every practice and book page land here.</div>`; return; }
+  all.innerHTML = `<div class="legend"><span>new</span><span class="l">learning</span><span class="k">known</span></div><div class="wlist">` +
+    BP.words.map(w => `<div class="wrow"><span class="dotst ${w.status}"></span><div class="tx"><b>${esc(w.phrase)}</b><i>${esc(w.ru || w.meaning)}</i></div>${playBtn(w.phrase)}<button class="x" data-p="${esc(w.phrase)}">✕</button></div>`).join("") + `</div>`;
+  wirePlays(all);
+  all.querySelectorAll(".x").forEach(x => x.onclick = async () => {
+    if (!x.classList.contains("arm")) { x.classList.add("arm"); x.textContent = "remove?"; setTimeout(()=>{ x.classList.remove("arm"); x.textContent = "✕"; }, 2500); return; }
+    haptic("medium"); x.closest(".wrow").remove();
+    BP.words = BP.words.filter(w => w.phrase !== x.dataset.p); BP.due = BP.due.filter(w => w.phrase !== x.dataset.p);
+    document.getElementById("bpCount").textContent = BP.words.length;
+    try { await api("/api/backpack/remove", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ phrase: x.dataset.p }) }); } catch(e) {}
+  });
+}
+function renderCard(){
+  const el = document.getElementById("pane-review");
+  if (!BP.due.length || fIdx >= BP.due.length) {
+    el.innerHTML = BP.words.length
+      ? `<div class="empty"><b>🎉</b>All words reviewed for today!<br>Come back tomorrow — the fire likes regular wood.</div>`
+      : `<div class="empty"><b>🎒</b>No words yet.<br>Speak, write or read a book page — new words appear here automatically.</div>`;
+    return;
+  }
+  const w = BP.due[fIdx];
+  el.innerHTML = `<div class="flash"><div class="fcount">${fIdx + 1} / ${BP.due.length}</div>
+    <div class="fcard" id="fcard"><div class="in">
+      <div class="fside"><div class="ph">${esc(w.phrase)}</div>${playBtn(w.phrase)}<div class="tap">TAP TO FLIP</div></div>
+      <div class="fside back"><div class="ph" style="font-size:22px">${esc(w.phrase)}</div><div class="mn">${esc(w.meaning)}</div>${w.ru ? `<div class="ru">${esc(w.ru)}</div>` : ""}${w.example ? `<div class="ex">“${esc(w.example)}”</div>` : ""}</div>
+    </div></div>
+    <div class="fbtns"><button class="bigbtn" id="fAgain">😕 Again</button><button class="bigbtn main" id="fGot">✅ Got it</button></div></div>`;
+  wirePlays(el);
+  const card = document.getElementById("fcard");
+  card.onclick = () => { haptic(); card.classList.toggle("flip"); };
+  const answer = async knew => {
+    haptic(knew ? "medium" : "light");
+    if (!knew) BP.due.push(w);
+    fIdx++; renderCard();
+    try { const j = await api("/api/backpack/review", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ phrase: w.phrase, knew }) }); setProgress(j.progress); } catch(e) {}
+  };
+  document.getElementById("fAgain").onclick = () => answer(false);
+  document.getElementById("fGot").onclick = () => answer(true);
+}
+
+/* ---------- Trail ---------- */
+const RANK_EMOJI = ["🥾","⛺","🥾","🧭","🌲","🏔","🌌","🔥"];
+const KIND = { speak:["🎙","Speaking"], write:["✍️","Writing"], chat:["💬","Telegram chat"], book:["📖","Book page"] };
+let TRAIL = null;
+OPEN.trail = async () => {
+  const el = document.getElementById("tscroll"); loading(el);
+  try { TRAIL = await api("/api/trail"); setProgress(TRAIL.summary); renderTrail(); }
+  catch(e) { failed(el, e); }
+};
+function renderTrail(){
+  const t = TRAIL, s = t.summary, el = document.getElementById("tscroll"), ri = Math.min(s.level - 1, t.ranks.length - 1);
+  const next = t.ranks[ri + 1];
+  const cal = t.calendar.map(c => { const lv = c.future ? "fu" : c.n >= 3 ? "l3" : c.n === 2 ? "l2" : c.n === 1 ? "l1" : "";
+    return `<div class="c ${lv}${c.date === new Date().toISOString().slice(0,10) ? " td" : ""}" title="${c.date}"></div>`; }).join("");
+  const hist = t.history.length ? t.history.map(h => { const k = KIND[h.kind] || ["🔥","Practice"], r = h.result || {};
+      const d = new Date(h.ts * 1000);
+      return `<div class="hrow" data-id="${h.id}"><div class="hi">${k[0]}</div><div class="ht"><b>${esc(h.prompt || r.transcript || k[1])}</b>
+        <i>${k[1]} · ${d.toLocaleDateString("en-GB",{day:"numeric",month:"short"})} ${d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}${h.quest ? " · 🏆 quest" : ""}</i></div><div class="hx">+${h.xp}</div></div>`; }).join("")
+    : `<p style="color:var(--muted);font-size:14px">Your first steps will appear here.</p>`;
+  el.innerHTML = `<div class="rankcard"><div class="emb">${RANK_EMOJI[ri]}</div><div style="flex:1">
+      <div class="rk">${esc(s.rank)}</div><div class="lv">Level ${s.level} · ${s.xp} XP total</div>
+      <div class="bar"><i style="width:${Math.round(100 * s.xp_in_level / s.xp_next)}%"></i></div>
+      <div class="nx">${next ? `${s.xp_next - s.xp_in_level} XP to <b style="color:var(--cream)">${esc(next)}</b>` : "Highest rank reached!"}</div></div></div>
+    <div class="ladder">${t.ranks.map((r,i) => `<span class="rung ${i < ri ? "past" : i === ri ? "now" : ""}">${RANK_EMOJI[i]} ${esc(r)}</span>`).join("")}</div>
+    <div class="stats">
+      <div class="stat"><b>${s.best_streak}</b><span>🔥 best streak</span></div>
+      <div class="stat"><b>${s.practices}</b><span>🎙 practices</span></div>
+      <div class="stat"><b>${t.minutes}</b><span>⏱ minutes spoken</span></div>
+      <div class="stat"><b>${t.known}<small style="font-size:15px;color:var(--muted)">/${s.words}</small></b><span>🎒 words known</span></div>
+    </div>
+    <section class="card"><h3>Last 6 weeks</h3><div class="heat">${["M","T","W","T","F","S","S"].map(d=>`<div class="hd">${d}</div>`).join("")}${cal}</div></section>
+    <section class="card"><h3>History</h3>${hist}</section>`;
+  el.querySelectorAll(".hrow").forEach(r => r.onclick = () => {
+    const h = t.history.find(x => x.id === r.dataset.id); if (!h || !h.result || !Object.keys(h.result).length) return;
+    haptic(); showResult(h.result, null, { from: "trail" });
+  });
+}
+
+/* ---------- Book Club ---------- */
+const bkCam = document.getElementById("bkCam"), bkGal = document.getElementById("bkGal");
+OPEN.book = () => { if (!document.getElementById("bscroll").dataset.has) bookIntro(); };
+function bookIntro(){
+  const el = document.getElementById("bscroll"); delete el.dataset.has;
+  el.innerHTML = `<div class="bookintro"><div class="bk">📖</div><h3>Read with me</h3>
+    <p>Take a photo of a page from your English book. I'll read it to you, translate it, pick useful words for your backpack and ask you about it.</p>
+    <div class="btnrow"><button class="bigbtn main" id="bkCamBtn">📷 Camera</button><button class="bigbtn" id="bkGalBtn">🖼 Gallery</button></div></div>`;
+  document.getElementById("bkCamBtn").onclick = () => { haptic(); bkCam.click(); };
+  document.getElementById("bkGalBtn").onclick = () => { haptic(); bkGal.click(); };
+}
+[bkCam, bkGal].forEach(inp => inp.addEventListener("change", async () => {
+  const f = inp.files && inp.files[0]; inp.value = ""; if (!f) return;
+  const busyEl = document.getElementById("bbusy"), sc = document.getElementById("bscroll");
+  sc.style.display = "none"; busyEl.style.display = "flex";
+  try {
+    const img = await shrinkImage(f);
+    const j = await api("/api/book", { method:"POST", headers:{"Content-Type":"image/jpeg"}, body: img });
+    if (j.progress) setProgress(j.progress);
+    renderBook(j.result); notify("success");
+  } catch(e) { toast(errText(e), 3200); notify("error"); }
+  busyEl.style.display = "none"; sc.style.display = "";
+}));
+function shrinkImage(file){
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file), im = new Image();
+    im.onload = () => { const k = Math.min(1, 1600 / Math.max(im.width, im.height)), cv = document.createElement("canvas");
+      cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k);
+      cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url);
+      cv.toBlob(b => b ? res(b) : rej(new Error("image")), "image/jpeg", .85); };
+    im.onerror = () => rej(new Error("image")); im.src = url;
+  });
+}
+function renderBook(r){
+  const el = document.getElementById("bscroll"); el.dataset.has = "1";
+  if (!r.text) { el.innerHTML = `<div class="empty"><b>🔍</b>${esc(r.summary || "I couldn't read English text on this photo.")}</div><div class="btnrow"><button class="bigbtn main" id="bkAgain">📷 Try again</button></div>`;
+    document.getElementById("bkAgain").onclick = () => bookIntro(); return; }
+  const vs = r.vocabulary || [], qs = r.questions || [];
+  el.innerHTML = `<div class="hero"><div class="emo">📖</div><div class="praise">${esc(r.title || "Your page")}</div>
+      <div class="gain"><span class="pill">+15 XP</span><span class="pill">🎒 ${vs.length} new words</span></div></div>
+    <section class="card"><h3>The page ${playBtn((r.text || "").slice(0, 2500))}</h3><div class="pagetext">${esc(r.text)}</div></section>
+    <section class="card"><h3>Перевод <button class="toggle" id="ruTg" style="margin-left:auto">show</button></h3><div class="ru-text" id="ruTx">${esc(r.translation)}</div></section>
+    ${r.summary ? `<section class="card"><h3>In short ${playBtn(r.summary)}</h3><p>${esc(r.summary)}</p></section>` : ""}
+    ${vs.length ? `<section class="card"><h3>Words for your backpack</h3>${vs.map((v,i) => `<div class="bw"><div class="tx"><b>${esc(v.phrase)}</b><span class="r">${esc(v.ru || "")}</span><i>${esc(v.meaning)}</i></div><button class="add" data-i="${i}">+ add</button></div>`).join("")}
+       <div class="btnrow" style="margin-top:10px"><button class="bigbtn" id="addAll">🎒 Add all</button></div></section>` : ""}
+    ${qs.length ? `<section class="card qcard"><h3>Let's talk about it</h3>${qs.map((q,i) => `<div class="dq"><p>${esc(q)}</p><button data-q="${i}">🎙</button></div>`).join("")}</section>` : ""}
+    <div class="btnrow"><button class="bigbtn main" id="bkNext">📷 Next page</button></div>`;
+  el.scrollTop = 0; wirePlays(el);
+  el.querySelectorAll(".card").forEach((c,i) => c.style.animationDelay = (.06 + i*.06) + "s");
+  document.getElementById("ruTg").onclick = () => { const t = document.getElementById("ruTx"); t.classList.toggle("on"); document.getElementById("ruTg").textContent = t.classList.contains("on") ? "hide" : "show"; };
+  const add = async (b) => { if (b.classList.contains("ok")) return; b.classList.add("ok"); b.textContent = "✓ added";
+    try { await api("/api/backpack/add", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(vs[+b.dataset.i]) }); } catch(e) {} };
+  el.querySelectorAll(".add").forEach(b => b.onclick = () => { haptic(); add(b); });
+  const aa = document.getElementById("addAll"); aa && (aa.onclick = () => { haptic("medium"); el.querySelectorAll(".add").forEach(add); toast("🎒 All words are in your backpack"); });
+  el.querySelectorAll(".dq button").forEach(b => b.onclick = () => { haptic("medium"); setPrompt(qs[+b.dataset.q]); stack = ["home","book"]; show("speak"); });
+  document.getElementById("bkNext").onclick = () => { haptic(); bkCam.click(); };
+}
+
 /* ================= demo mode (?demo) ================= */
 async function demoApi(path){
   await new Promise(r => setTimeout(r, path === "/api/me" ? 50 : 900));
-  if (path === "/api/me") return { ok:true, name:"Dima", progress:{ streak:3, level:2, xp_in_level:120, xp_next:200, week:[1,1,1,0,0,0,0], today_index:(new Date().getDay()+6)%7 } };
+  if (path === "/api/me") return { ok:true, name:"Dima", quest:{ reward:70, done:false }, progress:{ streak:3, level:2, xp_in_level:120, xp_next:200, due:4, week:[1,1,1,0,0,0,0], today_index:(new Date().getDay()+6)%7 } };
   if (path === "/api/tts") throw new Error("tts");
+  const today = new Date(), iso = d => d.toISOString().slice(0,10);
+  const W = [["spend the day","use all day doing something","провести день","We spent the day at the lake."],["look forward to","be happy about a future thing","ждать с нетерпением","I look forward to the weekend."],
+    ["breathtaking","very beautiful","захватывающий","The view was breathtaking."],["figure out","understand or solve","разобраться","I can't figure out this map."],["cozy","warm and comfortable","уютный","A cozy tent."],["run out of","have no more","закончиться","We ran out of water."]]
+    .map(([phrase,meaning,ru,example],i) => ({phrase,meaning,ru,example,status:["new","learning","known","learning","new","known"][i]}));
+  if (path === "/api/quest") return { ok:true, quest:{ title:"Campfire story", task:"Tell a short story about something funny that happened to you.", words:["actually","to be honest","by the way"], reward:70, done:false, from_backpack:false } };
+  if (path === "/api/backpack") return { ok:true, words:W, due:W.slice(0,4), summary:{} };
+  if (path.startsWith("/api/backpack/")) return { ok:true, progress:{} };
+  if (path === "/api/trail") { const cal = Array.from({length:42},(_,i)=>{ const d = new Date(today); d.setDate(d.getDate() - ((today.getDay()+6)%7) - 35 + i);
+      return { date: iso(d), n: d > today ? 0 : [0,1,2,0,3,1,1,0,2][i % 9], future: d > today }; });
+    const now = Date.now()/1000;
+    return { ok:true, minutes:47, known:12, ranks:["Tenderfoot","Camper","Hiker","Trailblazer","Ranger","Mountaineer","Explorer","Legend"], calendar:cal,
+      summary:{ streak:3, best_streak:9, level:2, rank:"Camper", xp:320, xp_in_level:120, xp_next:200, practices:23, words:41, due:4, week:[1,1,1,0,0,0,0], today_index:(today.getDay()+6)%7 },
+      history:[{id:"a",ts:now-3600,kind:"speak",prompt:"What do you usually do in the evening?",xp:20,result:{praise:"Nice!",transcript:"In the evening I usually read."}},
+               {id:"b",ts:now-86400,kind:"book",prompt:"A rainy evening in London",xp:15,result:{}},
+               {id:"c",ts:now-90000,kind:"write",prompt:"Campfire story",xp:70,quest:true,result:{praise:"Great quest!"}},
+               {id:"d",ts:now-180000,kind:"chat",prompt:"",xp:20,result:{transcript:"Yesterday I go to the beach"}}] }; }
+  if (path === "/api/book") return { ok:true, progress:{}, result:{ title:"A rainy evening in London",
+      text:"The rain had not stopped for three days. Emma pulled her coat tighter and hurried across the square, her boots splashing through the puddles.\n\nShe was late again, and this time she knew Mr. Harris would not forgive her.",
+      translation:"Дождь не прекращался уже три дня. Эмма плотнее запахнула пальто и поспешила через площадь, шлёпая ботинками по лужам.\n\nОна снова опаздывала, и на этот раз знала, что мистер Харрис её не простит.",
+      summary:"Emma is walking in the rain. She is late and worried that her boss will be angry.",
+      vocabulary:[{phrase:"pull tighter",meaning:"make clothes closer to the body",ru:"плотнее запахнуть",example:"Emma pulled her coat tighter."},{phrase:"hurry",meaning:"move fast",ru:"спешить"},{phrase:"puddle",meaning:"small pool of rain water",ru:"лужа"},{phrase:"forgive",meaning:"stop being angry with someone",ru:"простить"}],
+      questions:["Why do you think Emma is always late?","What would you do in her place?"] } };
   return { ok:true, progress:{ streak:4, level:2, xp_in_level:140, xp_next:200, week:[1,1,1,1,0,0,0], gained:20, today_index:(new Date().getDay()+6)%7 },
     result:{ emojis:"☕🌅😴", praise:"You told a clear story and used the past tense well!",
       transcript:"Yesterday I go to the beach with my friends and we was swimming all day.",

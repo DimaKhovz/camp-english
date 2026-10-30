@@ -138,6 +138,105 @@ html,body{height:100%;background:#070c18;overflow:hidden;color:var(--cream);
   .tile{min-height:54px;padding:8px 10px}.tile .s{display:none}
   .menu{margin-top:14px;gap:8px}.grid{gap:8px}
 }
+/* ---------- screens ---------- */
+.ui{transition:opacity .35s ease,transform .35s ease}
+body.away .ui{opacity:0;transform:scale(.97);pointer-events:none}
+.view{position:fixed;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;
+  padding:calc(var(--safe-top) + 14px) 18px calc(var(--safe-bot) + 16px);
+  background:linear-gradient(180deg,rgba(6,10,22,.72),rgba(6,10,22,.55) 45%,rgba(6,10,22,.78));
+  backdrop-filter:blur(14px) saturate(1.1);-webkit-backdrop-filter:blur(14px) saturate(1.1);
+  opacity:0;pointer-events:none;transform:translateY(16px);transition:opacity .35s ease,transform .35s ease}
+.view.on{opacity:1;pointer-events:auto;transform:none}
+.vhead{width:100%;max-width:430px;display:flex;align-items:center;gap:10px;height:40px;flex:none}
+.vhead h2{font-family:"Cinzel",serif;font-weight:900;font-size:22px;letter-spacing:.1em;
+  background:linear-gradient(180deg,#fff3dc,#ffb257 70%,#ff8a2a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vhead .sp{flex:1}
+.pill{height:30px;padding:0 11px;border-radius:15px;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;
+  background:var(--glass);border:1px solid rgba(255,160,80,.28);color:var(--ember-hi)}
+.prompt{width:100%;max-width:400px;margin-top:16px;padding:14px 16px;border-radius:18px;flex:none;
+  background:linear-gradient(180deg,rgba(255,150,60,.14),rgba(255,120,40,.05));border:1px solid rgba(255,160,80,.3)}
+.prompt small{display:block;font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--ember-hi);margin-bottom:6px}
+.prompt p{font-size:17px;font-weight:800;line-height:1.35}
+.prompt .shuffle{margin-top:10px;background:none;border:none;color:var(--muted);font:inherit;font-size:12px;font-weight:800;cursor:pointer;padding:0}
+
+/* recorder */
+.rec{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+.mic{position:relative;width:148px;height:148px;border-radius:50%;border:none;cursor:pointer;display:grid;place-items:center;
+  background:radial-gradient(circle at 38% 30%,#ffe2b0,#ffa449 45%,#e2531b 100%);color:#3a1606;
+  box-shadow:0 0 0 1px rgba(255,220,170,.5) inset,0 16px 40px rgba(255,110,30,.45),0 0 90px rgba(255,120,40,.3);transition:transform .15s}
+.mic:active{transform:scale(.95)}
+.mic svg{width:56px;height:56px}
+.mic .ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(255,170,90,.55);opacity:0;pointer-events:none}
+.mic.live .ring{animation:ring 1.8s ease-out infinite}.mic.live .ring.r2{animation-delay:.6s}.mic.live .ring.r3{animation-delay:1.2s}
+.mic.live{background:radial-gradient(circle at 38% 30%,#fff1d6,#ff8a2a 50%,#c8401a 100%)}
+.mic .stop{display:none;width:44px;height:44px;border-radius:12px;background:#3a1606}
+.mic.live .stop{display:block}.mic.live svg{display:none}
+#wave{width:min(320px,86vw);height:64px}
+.timer{font-family:"Cinzel",serif;font-weight:900;font-size:30px;color:var(--cream);letter-spacing:.06em;min-height:36px}
+.hint{font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;text-align:center}
+.linkbtn{background:none;border:none;color:var(--muted);font:inherit;font-weight:800;font-size:13px;cursor:pointer;padding:6px 10px}
+
+/* thinking */
+.think{display:none;flex-direction:column;align-items:center;gap:18px}
+.view.busy .think{display:flex}.view.busy .rec>*:not(.think){display:none}
+.bigflame{width:96px;height:118px;filter:drop-shadow(0 0 24px rgba(255,140,40,.9));animation:flick 1.1s ease-in-out infinite;transform-origin:50% 90%}
+.think p{font-weight:800;font-size:16px}.think span{font-size:13px;font-weight:600;color:var(--muted)}
+
+/* write */
+.writebox{width:100%;max-width:400px;flex:1;display:flex;flex-direction:column;gap:12px;margin-top:14px;min-height:0}
+textarea{flex:1;min-height:140px;width:100%;resize:none;border-radius:18px;padding:14px 16px;font:inherit;font-size:16px;font-weight:600;line-height:1.45;
+  color:var(--cream);background:rgba(10,16,30,.6);border:1px solid rgba(255,160,80,.3);outline:none;-webkit-user-select:text;user-select:text}
+textarea:focus{border-color:rgba(255,180,100,.7);box-shadow:0 0 0 3px rgba(255,150,60,.15)}
+textarea::placeholder{color:rgba(255,244,224,.35)}
+.send{height:54px;border:none;border-radius:18px;font-family:"Cinzel",serif;font-weight:900;font-size:18px;letter-spacing:.1em;color:#2b1104;cursor:pointer;
+  background:linear-gradient(180deg,#ffb257,#ff8a2a 50%,#e2531b);box-shadow:0 8px 24px rgba(255,110,30,.4)}
+.send:disabled{opacity:.45}
+.wcount{font-size:12px;font-weight:800;color:var(--muted);text-align:right}
+
+/* results */
+#result{padding-bottom:0}
+.scroll{width:100%;max-width:430px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 0 calc(var(--safe-bot) + 110px);
+  display:flex;flex-direction:column;gap:12px;-webkit-user-select:text;user-select:text}
+.scroll::-webkit-scrollbar{display:none}
+.hero{text-align:center;padding:6px 8px 4px}
+.hero .emo{font-size:46px;letter-spacing:6px;line-height:1.1;animation:pop .6s cubic-bezier(.2,1.4,.4,1) both}
+.hero .praise{margin-top:10px;font-size:18px;font-weight:800;line-height:1.35}
+.gain{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.gain .pill{animation:pop .6s .25s cubic-bezier(.2,1.4,.4,1) both}
+.card{border-radius:18px;padding:14px 16px;background:linear-gradient(180deg,rgba(18,28,50,.78),rgba(12,20,38,.72));
+  border:1px solid rgba(255,255,255,.08);box-shadow:0 8px 24px rgba(0,0,0,.3);animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+.card h3{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ember-hi);margin-bottom:10px}
+.card h3 .play{margin-left:auto}
+.card p{font-size:16px;font-weight:600;line-height:1.5}
+.card .said{font-style:italic;color:rgba(255,244,224,.85)}
+.fix{padding:10px 0;border-top:1px solid rgba(255,255,255,.07)}.fix:first-of-type{border-top:none;padding-top:0}
+.fix .w{color:#ff9b8a;text-decoration:line-through;text-decoration-color:rgba(255,120,100,.6);font-weight:700;font-size:15px}
+.fix .r{color:#9ef0b4;font-weight:800;font-size:16px;margin-top:3px}
+.fix .r::before{content:"→ ";color:var(--muted)}
+.fix .y{font-size:12.5px;font-weight:600;color:var(--muted);margin-top:4px}
+.native{font-size:18px !important;font-weight:800 !important;line-height:1.45 !important}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip2{padding:8px 11px;border-radius:12px;background:rgba(255,150,60,.1);border:1px solid rgba(255,160,80,.25)}
+.chip2 b{display:block;font-size:14px;font-weight:800;color:var(--cream)}
+.chip2 i{font-style:normal;font-size:12px;font-weight:600;color:var(--muted)}
+.play{width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;display:grid;place-items:center;flex:none;color:#2b1104;
+  background:radial-gradient(circle at 35% 30%,#ffe2b0,#ff9a3c);box-shadow:0 4px 12px rgba(255,110,30,.35)}
+.play svg{width:18px;height:18px}
+.play.loading svg{animation:spin 1s linear infinite}
+.play.playing{box-shadow:0 0 0 4px rgba(255,170,90,.25),0 4px 12px rgba(255,110,30,.35)}
+.qcard{background:linear-gradient(180deg,rgba(255,150,60,.18),rgba(255,120,40,.06));border-color:rgba(255,160,80,.35)}
+.qcard p{font-size:18px;font-weight:800}
+.qbtns{display:flex;gap:10px;margin-top:14px}
+.qbtns button{flex:1;height:46px;border-radius:14px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;border:1px solid rgba(255,160,80,.35);
+  background:rgba(10,16,30,.5);color:var(--cream)}
+.qbtns button.main{border:none;color:#2b1104;background:linear-gradient(180deg,#ffb257,#ff8a2a 50%,#e2531b)}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:4;display:flex;justify-content:center;padding:14px 18px calc(var(--safe-bot) + 16px);
+  background:linear-gradient(180deg,rgba(6,10,22,0),rgba(6,10,22,.92) 45%)}
+.dock button{width:100%;max-width:400px;height:52px;border-radius:16px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;
+  border:1px solid rgba(255,160,80,.35);background:rgba(14,22,40,.85);color:var(--cream)}
+@keyframes ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -163,14 +262,14 @@ html,body{height:100%;background:#070c18;overflow:hidden;color:var(--cream);
   </div>
 
   <nav class="menu">
-    <button class="btn primary" style="animation-delay:.15s" data-soon="Запись голоса">
+    <button class="btn primary" style="animation-delay:.15s" data-go="speak">
       <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/></svg></span>
       <span><div class="t">SPEAK</div><div class="s">Говорить · голос или кружок</div></span>
       <svg class="go" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
     </button>
 
     <div class="grid">
-      <button class="btn tile" style="animation-delay:.24s" data-soon="Письмо">
+      <button class="btn tile" style="animation-delay:.24s" data-go="write">
         <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
         <span><div class="t">Write</div><div class="s">Писать текстом</div></span>
       </button>
@@ -208,47 +307,357 @@ html,body{height:100%;background:#070c18;overflow:hidden;color:var(--cream);
   </section>
 </div>
 
+<!-- ===== SPEAK ===== -->
+<section class="view" id="speak">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2>SPEAK</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
+  <div class="prompt"><small class="js-plabel">Today's topic</small><p class="js-prompt">Tell me about your day.</p>
+    <button class="shuffle js-shuffle">↻ another topic</button></div>
+  <div class="rec">
+    <div class="timer" id="timer"></div>
+    <button class="mic" id="mic" aria-label="Record"><span class="ring"></span><span class="ring r2"></span><span class="ring r3"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v5M8 22h8"/></svg><span class="stop"></span></button>
+    <canvas id="wave"></canvas>
+    <div class="hint" id="hint">Tap the fire button and start speaking</div>
+    <button class="linkbtn" id="cancelRec" style="visibility:hidden">Cancel</button>
+    <div class="think">
+      <svg class="bigflame" viewBox="0 0 34 40"><defs><linearGradient id="fg2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e2531b"/><stop offset=".55" stop-color="#ff8a2a"/><stop offset="1" stop-color="#ffd27a"/></linearGradient></defs><path fill="url(#fg2)" d="M17 1c2 7 9 10 9 20a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 3 4 4 4-1-5-1-9 1-13z"/><path fill="#fff1c9" opacity=".9" d="M17 21c1 3 4 4 4 8a4 4 0 0 1-8 0c0-3 2-4 2-6 1 1 1 1 2-2z"/></svg>
+      <p class="js-thinkmsg">Listening to you…</p><span>Your coach is checking every word</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WRITE ===== -->
+<section class="view" id="write">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2>WRITE</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
+  <div class="prompt"><small class="js-plabel">Today's topic</small><p class="js-prompt">Tell me about your day.</p>
+    <button class="shuffle js-shuffle">↻ another topic</button></div>
+  <div class="writebox">
+    <textarea id="wtext" placeholder="Write a few sentences in English…" maxlength="3000"></textarea>
+    <div class="wcount" id="wcount">0 words</div>
+    <button class="send" id="wsend" disabled>SEND</button>
+  </div>
+  <div class="rec" style="display:none"><div class="think"><svg class="bigflame" viewBox="0 0 34 40"><path fill="url(#fg2)" d="M17 1c2 7 9 10 9 20a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 3 4 4 4-1-5-1-9 1-13z"/><path fill="#fff1c9" opacity=".9" d="M17 21c1 3 4 4 4 8a4 4 0 0 1-8 0c0-3 2-4 2-6 1 1 1 1 2-2z"/></svg>
+    <p>Reading your text…</p><span>Your coach is checking every word</span></div></div>
+</section>
+
+<!-- ===== RESULT ===== -->
+<section class="view" id="result">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <h2>RESULT</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
+  <div class="scroll" id="rscroll"></div>
+  <div class="dock"><button id="homeBtn">Back to camp</button></div>
+</section>
+
 <div class="toast" id="toast"></div>
 
 <script>
-/* ---------- demo state (позже придёт с сервера) ---------- */
-const state = { streak: 3, level: 2, xp: 120, xpNext: 200, doneDays: [0, 1, 2] /* 0 = Пн */ };
-
-/* ---------- Telegram ---------- */
+/* ================= state & API ================= */
 const tg = window.Telegram && window.Telegram.WebApp;
+const inTG = !!(tg && tg.initData);
+const params = new URLSearchParams(location.search);
+const DEMO = params.has("demo");
+let API = params.get("api") || "";
+try { if (API) localStorage.setItem("camp_api", API); else API = localStorage.getItem("camp_api") || ""; } catch(e) {}
+API = API.replace(/\/+$/, "");
+let progressState = { streak: 0, level: 1, xp_in_level: 0, xp_next: 200, week: [0,0,0,0,0,0,0], today_index: (new Date().getDay() + 6) % 7 };
+let heat = .5;
+
 function haptic(kind){ try{ tg && tg.HapticFeedback.impactOccurred(kind || "light"); }catch(e){} }
+function notify(kind){ try{ tg && tg.HapticFeedback.notificationOccurred(kind); }catch(e){} }
+const toastEl = document.getElementById("toast"); let toastT;
+function toast(msg, ms){ toastEl.textContent = msg; toastEl.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(()=>toastEl.classList.remove("on"), ms || 2200); }
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+async function api(path, opts = {}){
+  if (DEMO) return demoApi(path, opts);
+  if (!API) throw new Error("no_api");
+  const headers = Object.assign({ "X-Init-Data": tg ? tg.initData : "" }, opts.headers || {});
+  const r = await fetch(API + path, Object.assign({}, opts, { headers }));
+  if (path === "/api/tts") { if (!r.ok) throw new Error("tts"); return r.blob(); }
+  const j = await r.json().catch(() => ({ ok:false, error:"bad_response" }));
+  if (!r.ok || !j.ok) throw new Error(j.error || ("http_" + r.status));
+  return j;
+}
+function errText(e){
+  const m = String(e && e.message || e);
+  if (m === "no_api") return "Сервер не подключён — откройте приложение через бота";
+  if (m === "forbidden") return "Нет доступа — откройте приложение через бота";
+  if (m === "location") return "Gemini недоступен из текущей страны — проверьте VPN";
+  if (m === "too_short") return "Слишком коротко — скажите хотя бы пару фраз";
+  if (m.startsWith("Failed to fetch") || m.includes("NetworkError") || m.includes("Load failed")) return "Сервер не отвечает — компьютер с ботом включён?";
+  return "Не получилось — попробуйте ещё раз";
+}
+
+/* ================= Telegram setup ================= */
 if (tg) {
   try {
     tg.ready(); tg.expand();
     tg.setHeaderColor && tg.setHeaderColor("#0b1424");
     tg.setBackgroundColor && tg.setBackgroundColor("#070c18");
     if (tg.isVersionAtLeast && tg.isVersionAtLeast("7.7")) tg.disableVerticalSwipes();
-    if (tg.isVersionAtLeast && tg.isVersionAtLeast("8.0") && tg.platform !== "tdesktop") tg.requestFullscreen();
+    if (tg.isVersionAtLeast && tg.isVersionAtLeast("8.0") && !["tdesktop","macos","weba","webk"].includes(tg.platform)) tg.requestFullscreen();
     const u = tg.initDataUnsafe && tg.initDataUnsafe.user;
     if (u && u.first_name) document.getElementById("uname").textContent = u.first_name;
+    tg.BackButton && tg.BackButton.onClick(() => goBack());
   } catch(e) {}
 }
+if (inTG) document.querySelectorAll(".vhead .back").forEach(b => b.style.display = "none");
 
-/* ---------- HUD ---------- */
-document.getElementById("streak").textContent = state.streak;
-document.getElementById("lvl").textContent = state.level;
-document.getElementById("lvl2").textContent = state.level;
-document.getElementById("xpt").textContent = `${state.xp} / ${state.xpNext} XP`;
-document.getElementById("xpbar").style.width = Math.round(100 * state.xp / state.xpNext) + "%";
-const today = (new Date().getDay() + 6) % 7;
+/* ================= HUD ================= */
 const tick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-document.getElementById("week").innerHTML = ["M","T","W","T","F","S","S"].map((d,i)=>{
-  const done = state.doneDays.includes(i), cls = (done?" done":"") + (i===today?" today":"");
-  return `<div class="day${cls}"><div class="dot">${done?tick:""}</div>${d}</div>`;
-}).join("");
+function setProgress(p){
+  progressState = Object.assign(progressState, p || {});
+  const s = progressState;
+  document.getElementById("streak").textContent = s.streak;
+  document.querySelectorAll(".js-streak").forEach(e => e.textContent = s.streak);
+  document.getElementById("lvl").textContent = s.level;
+  document.getElementById("lvl2").textContent = s.level;
+  document.getElementById("xpt").textContent = `${s.xp_in_level} / ${s.xp_next} XP`;
+  document.getElementById("xpbar").style.width = Math.round(100 * s.xp_in_level / s.xp_next) + "%";
+  document.getElementById("week").innerHTML = ["M","T","W","T","F","S","S"].map((d,i)=>{
+    const done = !!s.week[i], cls = (done?" done":"") + (i===s.today_index?" today":"");
+    return `<div class="day${cls}"><div class="dot">${done?tick:""}</div>${d}</div>`;
+  }).join("");
+  heat = Math.min(1, .45 + s.streak * .08);
+}
+setProgress({});
+api("/api/me").then(j => { setProgress(j.progress); if (j.name) document.getElementById("uname").textContent = j.name; })
+  .catch(e => { if (String(e.message) !== "no_api") console.log("me failed", e); });
 
-/* ---------- buttons ---------- */
-const toast = document.getElementById("toast"); let tt;
-document.querySelectorAll("[data-soon]").forEach(b => b.addEventListener("click", () => {
+/* ================= navigation ================= */
+let current = "home", stack = [];
+function show(id){
+  if (current !== "home") document.getElementById(current).classList.remove("on");
+  current = id;
+  document.body.classList.toggle("away", id !== "home");
+  if (id !== "home") document.getElementById(id).classList.add("on");
+  try { if (tg && tg.BackButton) id === "home" ? tg.BackButton.hide() : tg.BackButton.show(); } catch(e) {}
+}
+function go(id){ stack.push(current); show(id); }
+function goBack(){
+  if (current === "speak" && rec.state !== "idle") { rec.cancel(); }
+  stopAudio();
+  show(stack.pop() || "home");
+}
+function goHome(){ stack = []; stopAudio(); show("home"); }
+document.querySelectorAll(".vhead .back").forEach(b => b.addEventListener("click", () => { haptic(); goBack(); }));
+document.getElementById("homeBtn").addEventListener("click", () => { haptic(); goHome(); });
+
+document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => {
   haptic(b.classList.contains("primary") ? "medium" : "light");
-  toast.textContent = "🔥 " + b.dataset.soon + " — скоро";
-  toast.classList.add("on"); clearTimeout(tt); tt = setTimeout(()=>toast.classList.remove("on"), 1600);
+  const id = b.dataset.go;
+  if (id === "speak" || id === "write") setPrompt(null);
+  go(id);
+  if (id === "write") setTimeout(() => document.getElementById("wtext").focus(), 350);
 }));
+document.querySelectorAll("[data-soon]").forEach(b => b.addEventListener("click", () => {
+  haptic(); toast("🔥 " + b.dataset.soon + " — скоро", 1600);
+}));
+
+/* ================= topics ================= */
+const TOPICS = [
+  "Tell me about your day.", "What did you eat today, and did you like it?", "Describe the place where you live.",
+  "What is a skill you want to learn this year, and why?", "Tell me about a book or film you enjoyed recently.",
+  "What would your perfect weekend look like?", "Describe a person who inspires you.",
+  "What is the best trip you have ever had?", "What do you usually do in the evening?",
+  "If you could live in any country, where would it be?", "Tell me about your work or studies.",
+  "What made you smile this week?"
+];
+let promptText = TOPICS[0], promptIsQuestion = false;
+function setPrompt(question){
+  promptIsQuestion = !!question;
+  promptText = question || TOPICS[(new Date().getDate() + Math.floor(Math.random()*3)) % TOPICS.length];
+  document.querySelectorAll(".js-prompt").forEach(e => e.textContent = promptText);
+  document.querySelectorAll(".js-plabel").forEach(e => e.textContent = question ? "Answer the question" : "Today's topic");
+}
+document.querySelectorAll(".js-shuffle").forEach(b => b.addEventListener("click", () => {
+  haptic(); let t; do { t = TOPICS[Math.floor(Math.random()*TOPICS.length)]; } while (t === promptText);
+  promptIsQuestion = false; promptText = t;
+  document.querySelectorAll(".js-prompt").forEach(e => e.textContent = t);
+  document.querySelectorAll(".js-plabel").forEach(e => e.textContent = "Today's topic");
+}));
+
+/* ================= recorder (WAV, 16 kHz mono) ================= */
+const MAX_SEC = 90;
+const micBtn = document.getElementById("mic"), timerEl = document.getElementById("timer"), hintEl = document.getElementById("hint"),
+      waveCv = document.getElementById("wave"), wctx = waveCv.getContext("2d"), cancelBtn = document.getElementById("cancelRec");
+const rec = {
+  state: "idle", stream: null, ac: null, proc: null, src: null, analyser: null, chunks: [], rate: 48000, t0: 0, raf: 0,
+  async start(){
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, channelCount: 1 } });
+    } catch(e) { toast("Нет доступа к микрофону — разрешите его в настройках"); notify("error"); return; }
+    const AC = window.AudioContext || window.webkitAudioContext;
+    this.ac = new AC(); this.rate = this.ac.sampleRate; this.chunks = [];
+    this.src = this.ac.createMediaStreamSource(this.stream);
+    this.analyser = this.ac.createAnalyser(); this.analyser.fftSize = 1024;
+    this.proc = this.ac.createScriptProcessor(4096, 1, 1);
+    this.proc.onaudioprocess = e => { if (this.state === "rec") this.chunks.push(new Float32Array(e.inputBuffer.getChannelData(0))); };
+    this.src.connect(this.analyser); this.src.connect(this.proc); this.proc.connect(this.ac.destination);
+    this.state = "rec"; this.t0 = performance.now();
+    micBtn.classList.add("live"); hintEl.textContent = "Speaking… tap to finish"; cancelBtn.style.visibility = "visible";
+    haptic("medium"); this.loop();
+  },
+  loop(){
+    const sec = (performance.now() - this.t0) / 1000;
+    timerEl.textContent = `${Math.floor(sec/60)}:${String(Math.floor(sec%60)).padStart(2,"0")}`;
+    drawWave(this.analyser);
+    if (sec >= MAX_SEC) { this.finish(); return; }
+    this.raf = requestAnimationFrame(() => this.loop());
+  },
+  release(){
+    cancelAnimationFrame(this.raf);
+    try { this.proc.disconnect(); this.src.disconnect(); } catch(e) {}
+    try { this.stream.getTracks().forEach(t => t.stop()); } catch(e) {}
+    try { this.ac.close(); } catch(e) {}
+    micBtn.classList.remove("live"); cancelBtn.style.visibility = "hidden"; timerEl.textContent = "";
+    hintEl.textContent = "Tap the fire button and start speaking"; drawWave(null);
+  },
+  cancel(){ this.state = "idle"; this.release(); },
+  finish(){
+    const sec = (performance.now() - this.t0) / 1000;
+    this.state = "idle"; this.release();
+    if (sec < 1.5) { toast("Слишком коротко — скажите хотя бы пару фраз"); return; }
+    sendSpeech(encodeWav(this.chunks, this.rate));
+  }
+};
+micBtn.addEventListener("click", () => { rec.state === "rec" ? rec.finish() : rec.start(); });
+cancelBtn.addEventListener("click", () => { haptic(); rec.cancel(); });
+
+function drawWave(an){
+  const dpr = Math.min(devicePixelRatio || 1, 2), w = waveCv.clientWidth, h = waveCv.clientHeight;
+  if (waveCv.width !== w*dpr) { waveCv.width = w*dpr; waveCv.height = h*dpr; }
+  wctx.setTransform(dpr,0,0,dpr,0,0); wctx.clearRect(0,0,w,h);
+  const bars = 36, gap = 3, bw = (w - gap*(bars-1)) / bars;
+  let data = null; if (an) { data = new Uint8Array(an.fftSize); an.getByteTimeDomainData(data); }
+  for (let i = 0; i < bars; i++){
+    let v = .06;
+    if (data){ let m = 0; const step = Math.floor(data.length / bars);
+      for (let k = i*step; k < (i+1)*step; k++) m = Math.max(m, Math.abs(data[k] - 128) / 128);
+      v = Math.max(.06, Math.min(1, m * 2.4)); }
+    const bh = v * h, x = i*(bw+gap), y = (h - bh) / 2;
+    const g = wctx.createLinearGradient(0, y, 0, y + bh); g.addColorStop(0, "#ffd27a"); g.addColorStop(1, "#e2531b");
+    wctx.fillStyle = g; wctx.globalAlpha = data ? 1 : .35;
+    wctx.beginPath(); wctx.roundRect ? wctx.roundRect(x, y, bw, bh, bw/2) : wctx.rect(x, y, bw, bh); wctx.fill();
+  }
+  wctx.globalAlpha = 1;
+}
+function encodeWav(chunks, inRate){
+  const outRate = 16000, total = chunks.reduce((n,c)=>n+c.length,0), all = new Float32Array(total);
+  let o = 0; for (const c of chunks){ all.set(c, o); o += c.length; }
+  const ratio = inRate / outRate, n = Math.floor(total / ratio), pcm = new Int16Array(n);
+  for (let i = 0; i < n; i++){
+    const s0 = Math.floor(i*ratio), s1 = Math.min(total, Math.floor((i+1)*ratio)); let acc = 0;
+    for (let k = s0; k < s1; k++) acc += all[k];
+    const v = Math.max(-1, Math.min(1, acc / Math.max(1, s1 - s0))); pcm[i] = v < 0 ? v * 0x8000 : v * 0x7fff;
+  }
+  const buf = new ArrayBuffer(44 + pcm.length*2), dv = new DataView(buf);
+  const ws = (p, s) => { for (let i=0;i<s.length;i++) dv.setUint8(p+i, s.charCodeAt(i)); };
+  ws(0,"RIFF"); dv.setUint32(4, 36 + pcm.length*2, true); ws(8,"WAVE"); ws(12,"fmt ");
+  dv.setUint32(16,16,true); dv.setUint16(20,1,true); dv.setUint16(22,1,true); dv.setUint32(24,outRate,true);
+  dv.setUint32(28,outRate*2,true); dv.setUint16(32,2,true); dv.setUint16(34,16,true); ws(36,"data"); dv.setUint32(40,pcm.length*2,true);
+  new Int16Array(buf, 44).set(pcm);
+  return new Blob([buf], { type: "audio/wav" });
+}
+drawWave(null);
+
+/* ================= sending ================= */
+const THINK = ["Listening to you…", "Checking grammar…", "Finding better words…", "Almost ready…"];
+let thinkT;
+function busy(view, on){
+  const v = document.getElementById(view); v.classList.toggle("busy", on);
+  if (view === "write") { v.querySelector(".writebox").style.display = on ? "none" : ""; v.querySelector(".rec").style.display = on ? "flex" : "none"; }
+  clearInterval(thinkT);
+  if (on && view === "speak") { let i = 0; const el = v.querySelector(".js-thinkmsg"); el.textContent = THINK[0];
+    thinkT = setInterval(() => { i = Math.min(i+1, THINK.length-1); el.textContent = THINK[i]; }, 2600); }
+}
+async function sendSpeech(blob){
+  busy("speak", true);
+  try {
+    const j = await api("/api/analyze", { method: "POST", headers: { "Content-Type": "audio/wav" }, body: blob });
+    busy("speak", false); showResult(j.result, j.progress);
+  } catch(e) { busy("speak", false); toast(errText(e), 3200); notify("error"); }
+}
+const wtext = document.getElementById("wtext"), wsend = document.getElementById("wsend");
+wtext.addEventListener("input", () => {
+  const n = (wtext.value.trim().match(/\S+/g) || []).length;
+  document.getElementById("wcount").textContent = n + (n === 1 ? " word" : " words"); wsend.disabled = n < 2;
+});
+wsend.addEventListener("click", async () => {
+  haptic("medium"); wtext.blur(); busy("write", true);
+  try {
+    const j = await api("/api/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: wtext.value }) });
+    busy("write", false); wtext.value = ""; wtext.dispatchEvent(new Event("input")); showResult(j.result, j.progress);
+  } catch(e) { busy("write", false); toast(errText(e), 3200); notify("error"); }
+});
+
+/* ================= results ================= */
+const speakerIcon = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+let lastQuestion = "";
+function showResult(r, p){
+  r = r || {};
+  const prev = progressState.level;
+  if (p) setProgress(p);
+  lastQuestion = r.question || "";
+  const card = (title, body, cls = "", play = "") => `<section class="card ${cls}"><h3>${title}${play ? `<button class="play" data-say="${esc(play)}">${speakerIcon}</button>` : ""}</h3>${body}</section>`;
+  let h = `<div class="hero"><div class="emo">${esc(r.emojis || r.reaction || "🔥")}</div>
+    <div class="praise">${esc(r.praise || "Great job!")}</div>
+    <div class="gain">${p && p.gained ? `<span class="pill">+${p.gained} XP</span>` : ""}<span class="pill">🔥 ${progressState.streak} day${progressState.streak === 1 ? "" : "s"}</span>
+    ${p && p.level > prev ? `<span class="pill">⬆ Level ${p.level}</span>` : ""}</div></div>`;
+  if (r.transcript) h += card("You said", `<p class="said">“${esc(r.transcript)}”</p>`);
+  const ms = Array.isArray(r.mistakes) ? r.mistakes : [];
+  h += card(ms.length ? "Fix these" : "Mistakes", ms.length ? ms.map(m => `<div class="fix"><div class="w">${esc(m.wrong)}</div><div class="r">${esc(m.right)}</div>${m.why ? `<div class="y">${esc(m.why)}</div>` : ""}</div>`).join("")
+       : `<p>No mistakes — clean English! 🎯</p>`);
+  if (r.native_version) h += card("Say it like a native", `<p class="native">${esc(r.native_version)}</p>`, "", r.native_version);
+  const vs = Array.isArray(r.vocabulary) ? r.vocabulary : [];
+  if (vs.length) h += card("Useful words", `<div class="chips">${vs.map(v => `<div class="chip2" data-say="${esc(v.phrase)}"><b>${esc(v.phrase)}</b><i>${esc(v.meaning)}</i></div>`).join("")}</div>`);
+  if (r.pronunciation) h += card("Pronunciation", `<p>${esc(r.pronunciation)}</p>`);
+  if (lastQuestion) h += card("Your next question", `<p>${esc(lastQuestion)}</p><div class="qbtns"><button class="main" id="ansSpeak">🎙 Answer</button><button id="ansWrite">✍️ Write</button></div>`, "qcard", lastQuestion);
+  const sc = document.getElementById("rscroll"); sc.innerHTML = h; sc.scrollTop = 0;
+  sc.querySelectorAll(".card").forEach((c,i) => c.style.animationDelay = (.08 + i*.07) + "s");
+  sc.querySelectorAll(".play").forEach(b => b.addEventListener("click", e => { e.stopPropagation(); playTTS(b.dataset.say, b); }));
+  sc.querySelectorAll(".chip2").forEach(b => b.addEventListener("click", () => playTTS(b.dataset.say, null)));
+  const a1 = document.getElementById("ansSpeak"), a2 = document.getElementById("ansWrite");
+  a1 && a1.addEventListener("click", () => { haptic("medium"); setPrompt(lastQuestion); stack = ["home"]; show("speak"); });
+  a2 && a2.addEventListener("click", () => { haptic(); setPrompt(lastQuestion); stack = ["home"]; show("write"); setTimeout(()=>wtext.focus(),350); });
+  notify("success");
+  stack = ["home"]; show("result");
+}
+
+/* ================= audio ================= */
+const ttsCache = new Map(); let audioEl = null, audioBtn = null;
+function stopAudio(){ if (audioEl) { audioEl.pause(); audioEl = null; } if (audioBtn) { audioBtn.classList.remove("playing","loading"); audioBtn = null; } }
+async function playTTS(text, btn){
+  if (!text) return;
+  const same = audioBtn === btn && audioEl; stopAudio(); if (same) return;
+  haptic(); audioBtn = btn; btn && btn.classList.add("loading");
+  try {
+    let url = ttsCache.get(text);
+    if (!url) { const blob = await api("/api/tts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+      url = URL.createObjectURL(blob); ttsCache.set(text, url); }
+    if (audioBtn !== btn) return;
+    audioEl = new Audio(url); btn && btn.classList.replace("loading", "playing");
+    audioEl.onended = () => stopAudio(); await audioEl.play();
+  } catch(e) { stopAudio(); toast(DEMO ? "В демо-режиме озвучки нет" : errText(e)); }
+}
+
+/* ================= demo mode (?demo) ================= */
+async function demoApi(path){
+  await new Promise(r => setTimeout(r, path === "/api/me" ? 50 : 900));
+  if (path === "/api/me") return { ok:true, name:"Dima", progress:{ streak:3, level:2, xp_in_level:120, xp_next:200, week:[1,1,1,0,0,0,0], today_index:(new Date().getDay()+6)%7 } };
+  if (path === "/api/tts") throw new Error("tts");
+  return { ok:true, progress:{ streak:4, level:2, xp_in_level:140, xp_next:200, week:[1,1,1,1,0,0,0], gained:20, today_index:(new Date().getDay()+6)%7 },
+    result:{ emojis:"☕🌅😴", praise:"You told a clear story and used the past tense well!",
+      transcript:"Yesterday I go to the beach with my friends and we was swimming all day.",
+      mistakes:[{wrong:"I go to the beach",right:"I went to the beach",why:"Past tense for finished actions"},
+                {wrong:"we was swimming",right:"we were swimming",why:"'We' always takes 'were'"}],
+      native_version:"Yesterday I went to the beach with my friends, and we spent the whole day swimming.",
+      vocabulary:[{phrase:"spend the day",meaning:"use all day doing something"},{phrase:"a day out",meaning:"a trip for fun"},{phrase:"soak up the sun",meaning:"enjoy sunshine"}],
+      pronunciation:"'beach' has a long 'ee' sound, like 'bee'.",
+      question:"What is your favourite thing to do at the beach?" } };
+}
 
 /* ---------- background video ---------- */
 const vid = document.getElementById("bgv");
@@ -275,7 +684,7 @@ function resize(){
 }
 addEventListener("resize", resize); resize();
 
-const heat = Math.min(1, .45 + state.streak * .08);   // костёр ярче с ростом серии
+// heat задаётся в setProgress(): чем длиннее серия, тем ярче костёр
 function spawn(){
   const f = map(FIRE);
   embers.push({ x: f.x + (Math.random() - .5) * 26 * S, y: f.y - 10 * S,

@@ -501,7 +501,7 @@ const inTG = !!(tg && tg.initData);
 const params = new URLSearchParams(location.search);
 const DEMO = params.has("demo");
 let API = params.get("api") || "";
-try { if (API) localStorage.setItem("camp_api", API); else API = localStorage.getItem("camp_api") || ""; } catch(e) {}
+try { if (API) localStorage.setItem("camp_api", API); else if (!inTG) API = localStorage.getItem("camp_api") || ""; } catch(e) {}
 API = API.replace(/\/+$/, "");
 let progressState = { streak: 0, level: 1, xp_in_level: 0, xp_next: 200, week: [0,0,0,0,0,0,0], today_index: (new Date().getDay() + 6) % 7 };
 let heat = .5;
@@ -528,7 +528,7 @@ function errText(e){
   if (m === "forbidden") return "Нет доступа — откройте приложение через бота";
   if (m === "location") return "Gemini недоступен из текущей страны — проверьте VPN";
   if (m === "too_short") return "Слишком коротко — скажите хотя бы пару фраз";
-  if (m.startsWith("Failed to fetch") || m.includes("NetworkError") || m.includes("Load failed")) return "Сервер не отвечает — компьютер с ботом включён?";
+  if (m.startsWith("Failed to fetch") || m.includes("NetworkError") || m.includes("Load failed")) return "Адрес сервера обновился — закройте приложение и откройте его кнопкой «🔥 Open Camp English» в чате с ботом";
   return "Не получилось — попробуйте ещё раз";
 }
 

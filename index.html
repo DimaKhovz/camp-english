@@ -370,6 +370,13 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 .peek{background:none;border:none;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
 .peek .full{display:none;color:var(--ember-hi);margin-top:4px}.peek.open .full{display:block}
 .dots{color:var(--muted);letter-spacing:.06em}
+.hidebox{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.hw{display:inline-block;touch-action:none;cursor:pointer;border-radius:5px;padding:0 3px;margin:2px 0;background:rgba(255,255,255,.13);box-shadow:inset 0 -2px 0 rgba(255,170,60,.45);line-height:1.35;transition:background .15s}
+.hw b,.hw i{font-style:normal;font-weight:inherit;color:transparent}
+.hw.s1 b{color:var(--ember-hi)}
+.hw.s2{background:rgba(255,170,60,.22);box-shadow:none}.hw.s2 b,.hw.s2 i{color:var(--cream)}
+.hstat{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px;font-size:13px;font-weight:700;color:var(--muted)}
+.hstat span{background:rgba(255,255,255,.07);border-radius:999px;padding:4px 10px}
 .lscore{font-family:"Cinzel",serif;font-weight:900;font-size:46px;line-height:1;margin-top:6px;color:var(--cream)}
 .chips3{display:flex;flex-wrap:wrap;gap:6px}
 .chips3 span{font-size:12.5px;font-weight:800;padding:5px 9px;border-radius:10px;border:1px solid rgba(120,230,150,.5);background:rgba(120,230,150,.14)}
@@ -1055,11 +1062,11 @@ function renderBook(r){
 
 /* ---------- Ladder: memorize a rhyming piece, then retell it ---------- */
 var LD = null, LP = null, LSTAGE = 0, LRES = null, LSELF = false, LBUSY = false, lTopic = "", lOwn = "", lShowOwn = false;
-const LSTAGES = ["Read", "Gaps", "Letters", "Russian", "Retell"];
+const LSTAGES = ["Read", "Gaps", "Hide", "Russian", "Retell"];
 const LTIPS = [
   "Прочитай вслух 2–3 раза и послушай. Выделенные фразы — те, что забираешь в рюкзак.",
   "Расскажи кусок, вспоминая пропущенные фразы. Нажми на пропуск, чтобы подсмотреть.",
-  "Остались первые буквы. Скажи каждую строку целиком. Нажми на строку, чтобы подсмотреть.",
+  "Всё закрыто. Расскажи кусок по памяти. Забыл — нажми на слово: 1-й раз первая буква, 2-й раз слово целиком. Проведи пальцем — откроются все слова под пальцем.",
   "Смотришь на перевод и говоришь по-английски. Нажми на строку, чтобы проверить себя.",
   "Расскажи весь кусок без подсказок. Можно своими словами — главное смысл и ключевые фразы."
 ];
@@ -1095,6 +1102,50 @@ function lInitials(en){
   }).join("");
 }
 const lText = p => p.lines.map(l => l.en).join(" ");
+function lHidden(en){
+  return en.split(/(\s+)/).map(w => {
+    if (/^\s*$/.test(w)) return w;
+    const m = w.match(/^([^A-Za-z0-9]*)([A-Za-z0-9])([A-Za-z0-9'’-]*)(.*)$/);
+    if (!m) return esc(w);
+    return esc(m[1]) + `<span class="hw"><b>${esc(m[2])}</b><i>${esc(m[3])}</i></span>` + esc(m[4]);
+  }).join("");
+}
+function hStat(){
+  const box = lsc().querySelector(".hidebox"), out = lsc().querySelector("#hStat"); if (!box || !out) return;
+  const all = box.querySelectorAll(".hw").length, w = box.querySelectorAll(".hw.s2").length, l = box.querySelectorAll(".hw.s1").length;
+  out.innerHTML = `<span>👀 ${w} of ${all} words</span>${l ? `<span>💡 ${l} letter${l === 1 ? "" : "s"}</span>` : ""}${!w && !l ? `<span>🔥 nothing peeked</span>` : ""}`;
+}
+function hSet(cls){
+  lsc().querySelectorAll(".hidebox .hw").forEach(x => { x.classList.remove("s1", "s2"); if (cls) x.classList.add(cls); }); hStat();
+}
+/* tap = next step (letter → word); drag across words = open each one fully */
+(function(){
+  let start = null, moved = false;
+  const hwAt = (x, y) => { const e = document.elementFromPoint(x, y); return e && e.closest && e.closest(".hidebox .hw"); };
+  const openFull = w => { if (w && !w.classList.contains("s2")) { w.classList.remove("s1"); w.classList.add("s2"); haptic(); hStat(); } };
+  lsc().addEventListener("pointerdown", e => {
+    const w = e.target.closest && e.target.closest(".hidebox .hw"); if (!w) return;
+    start = w; moved = false;
+    try { w.releasePointerCapture(e.pointerId); } catch(x) {}
+  });
+  lsc().addEventListener("pointermove", e => {
+    if (!start) return;
+    const w = hwAt(e.clientX, e.clientY);
+    if (w && w !== start) { if (!moved) { moved = true; openFull(start); } openFull(w); }
+  });
+  const end = () => {
+    if (start && !moved) {
+      haptic();
+      if (start.classList.contains("s2")) start.classList.remove("s2");
+      else if (start.classList.contains("s1")) { start.classList.remove("s1"); start.classList.add("s2"); }
+      else start.classList.add("s1");
+      hStat();
+    }
+    start = null; moved = false;
+  };
+  lsc().addEventListener("pointerup", end);
+  lsc().addEventListener("pointercancel", () => { start = null; moved = false; });
+})();
 
 OPEN.ladder = () => { LP = null; LRES = null; loadLadder(); };
 async function loadLadder(){
@@ -1143,11 +1194,13 @@ function renderLadderPiece(){
       let body;
       if (s === 0) body = `<div class="en">${lMarked(l.en, p.phrases, false)}<div class="ru">${esc(l.ru)}</div></div>${playBtn(l.en)}`;
       else if (s === 1) body = `<div class="en">${lMarked(l.en, p.phrases, true)}</div>`;
-      else if (s === 2) body = `<button class="peek en" data-peek><span>${lInitials(l.en)}</span><span class="full">${esc(l.en)}</span></button>`;
+      else if (s === 2) body = `<div class="en">${lHidden(l.en)}</div>`;
       else body = `<button class="peek en" data-peek><span class="ru" style="font-size:16px;color:var(--cream)">${esc(l.ru)}</span><span class="full">${esc(l.en)}</span></button>`;
       return `<div class="lline"><span class="n">${i + 1}</span>${body}</div>`;
     }).join("");
-    h += `<section class="card"><h3>${esc(LSTAGES[s])} ${playBtn(lText(p))}</h3><p class="tipline" style="margin-bottom:10px">${LTIPS[s]}</p>${lines}</section>`;
+    const extra = s === 0 ? `<div class="btnrow" style="margin-top:12px"><button class="bigbtn" data-ls="2">🙈 Hide all &amp; recall</button></div>`
+      : s === 2 ? `<div class="hstat" id="hStat"></div><div class="btnrow" style="margin-top:10px"><button class="smallbtn" id="hClose">🙈 Close all</button><button class="smallbtn" id="hOpen">👁 Open all</button></div>` : "";
+    h += `<section class="card"><h3>${esc(LSTAGES[s])} ${playBtn(lText(p))}</h3><p class="tipline" style="margin-bottom:10px">${LTIPS[s]}</p><div class="${s === 2 ? "hidebox" : ""}">${lines}</div>${extra}</section>`;
     if (s === 0 && p.phrases.length) h += `<section class="card"><h3>Phrases for your backpack</h3>${p.phrases.map(f => `<div class="lph"><div class="tx"><b>${esc(f.phrase)}</b><span class="r">${esc(f.ru)}</span>${f.meaning ? `<i>${esc(f.meaning)}</i>` : ""}</div>${playBtn(f.phrase)}</div>`).join("")}</section>`;
     h += `<div class="btnrow"><button class="bigbtn main" data-ls="${s + 1}">Next: ${LSTAGES[s + 1]} →</button></div>`;
   } else if (LRES) {
@@ -1160,7 +1213,7 @@ function renderLadderPiece(){
       <p class="tipline" style="margin:10px 0">Сравни со своим пересказом и оцени честно:</p>
       <div class="btnrow"><button class="bigbtn" data-g="again">🔁 Again</button><button class="bigbtn" data-g="ok">👍 OK</button><button class="bigbtn main" data-g="good">✅ Good</button></div></section>`;
   }
-  el.innerHTML = h; wirePlays(el);
+  el.innerHTML = h; wirePlays(el); hStat();
   el.querySelectorAll(".card").forEach((c, i) => c.style.animationDelay = (.04 + i * .06) + "s");
 }
 function ladderResultHTML(j){
@@ -1217,6 +1270,7 @@ lsc().addEventListener("click", async e => {
   const t = e.target.closest("button"); if (!t || t.classList.contains("play")) return;
   const ds = t.dataset;
   if ("gap" in ds || "peek" in ds) { haptic(); t.classList.toggle("open"); return; }
+  if (t.id === "hClose" || t.id === "hOpen") { haptic("medium"); hSet(t.id === "hOpen" ? "s2" : ""); return; }
   if (ds.ls != null) { haptic(); stopAudio(); LSTAGE = Math.min(4, +ds.ls); renderLadderPiece(); lsc().scrollTop = 0; return; }
   if (ds.open) { haptic(); openPiece(ds.open, !!(LD.pieces.find(p => p.id === ds.open) || {}).reviews?.length); return; }
   if (ds.del) {

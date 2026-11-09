@@ -334,6 +334,50 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 .bookintro .bk{font-size:52px}
 .bookintro h3{font-family:"Cinzel",serif;font-weight:900;font-size:22px;margin:8px 0 6px}
 .bookintro p{font-size:14px;font-weight:600;color:var(--muted);line-height:1.5;margin-bottom:18px}
+/* ladder */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-items:end;margin:4px 0 12px}
+.steps div{border-radius:8px 8px 3px 3px;background:rgba(255,255,255,.07);display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-weight:900;font-size:13px;color:var(--muted)}
+.steps .past{background:rgba(255,150,60,.25);color:var(--cream)}
+.steps .now{background:linear-gradient(180deg,#ffb257,#e2531b);color:#2b1104}
+.pips{display:inline-flex;gap:5px;vertical-align:middle;margin-left:4px}
+.pips i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14)}
+.pips i.on{background:#9ef0b4}
+.tipline{font-size:13.5px;font-weight:600;color:var(--muted);line-height:1.45}
+.smallbtn{height:32px;padding:0 12px;border-radius:16px;border:1px solid rgba(255,160,80,.4);background:rgba(255,150,60,.12);color:var(--cream);font:inherit;font-weight:800;font-size:12px;cursor:pointer;flex:none}
+.smallbtn:disabled{opacity:.4}
+.smallbtn.arm{color:#ff9b8a;border-color:rgba(255,120,100,.6)}
+.lin{width:100%;height:46px;border-radius:14px;padding:0 14px;font:inherit;font-size:15px;font-weight:600;color:var(--cream);background:rgba(10,16,30,.6);border:1px solid rgba(255,160,80,.3);outline:none;-webkit-user-select:text;user-select:text}
+.lin::placeholder{color:rgba(255,244,224,.35)}
+.lrow{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px solid rgba(255,255,255,.07)}
+.lrow:first-of-type{border-top:none;padding-top:0}
+.lrow .tx{flex:1;min-width:0}.lrow .tx b{font-size:15px;font-weight:800}
+.lrow .tx i{display:block;font-style:normal;font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.st{font-size:11px;font-weight:800;padding:3px 8px;border-radius:10px;border:1px solid rgba(255,255,255,.2);color:var(--muted);white-space:nowrap}
+.st.due{color:var(--ember-hi);border-color:rgba(255,160,80,.55)}.st.ok{color:#9ef0b4;border-color:rgba(120,230,150,.5)}
+.lseg{margin-top:0;max-width:none;overflow-x:auto;scrollbar-width:none}
+.lseg::-webkit-scrollbar{display:none}
+.lseg button{font-size:12px;padding:0 6px;flex:1 0 auto}
+#lscroll .gain{flex-wrap:wrap}
+#lscroll .gain .pill{white-space:nowrap}
+.lline{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid rgba(255,255,255,.07)}
+.lline:first-of-type{border-top:none;padding-top:0}
+.lline .n{font-size:12px;font-weight:900;color:var(--ember-hi);padding-top:5px;width:14px;flex:none}
+.lline .en{flex:1;min-width:0;font-size:17px;font-weight:700;line-height:1.55}
+.lline .ru{font-size:13.5px;color:var(--muted);font-weight:600;margin-top:3px;line-height:1.4}
+.lline mark{background:rgba(255,170,60,.3);color:var(--cream);border-radius:4px;padding:0 2px}
+.gapw{border:none;border-bottom:2px solid var(--ember-hi);background:rgba(255,255,255,.08);color:transparent;font:inherit;border-radius:4px;padding:0 2px;cursor:pointer}
+.gapw.open{color:var(--cream);background:rgba(255,170,60,.3)}
+.peek{background:none;border:none;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+.peek .full{display:none;color:var(--ember-hi);margin-top:4px}.peek.open .full{display:block}
+.dots{color:var(--muted);letter-spacing:.06em}
+.lscore{font-family:"Cinzel",serif;font-weight:900;font-size:46px;line-height:1;margin-top:6px;color:var(--cream)}
+.chips3{display:flex;flex-wrap:wrap;gap:6px}
+.chips3 span{font-size:12.5px;font-weight:800;padding:5px 9px;border-radius:10px;border:1px solid rgba(120,230,150,.5);background:rgba(120,230,150,.14)}
+.chips3 span.miss{border-color:rgba(255,160,80,.45);background:rgba(255,150,60,.12)}
+.lph{padding:8px 0;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:10px;align-items:flex-start}
+.lph:first-of-type{border-top:none;padding-top:0}
+.lph .tx{flex:1;min-width:0}.lph b{font-size:15px;font-weight:800}.lph .r{font-size:13px;color:var(--ember-hi);font-weight:700;margin-left:6px}
+.lph i{display:block;font-style:normal;font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
 .pagetext{font-size:16px;font-weight:600;line-height:1.65;white-space:pre-wrap}
 .ru-text{font-size:15px;font-weight:600;line-height:1.6;color:rgba(255,244,224,.85);white-space:pre-wrap;display:none}
 .ru-text.on{display:block}
@@ -399,6 +443,12 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
         <span><div class="t">Trail</div><div class="s">Путь и прогресс</div></span>
       </button>
     </div>
+
+    <button class="btn slim" style="animation-delay:.45s" data-go="ladder">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v18M17 3v18M7 7.5h10M7 12h10M7 16.5h10"/></svg></span>
+      <span><div class="t">Ladder</div><div class="s">Запомни кусок → перескажи</div></span>
+      <span class="lock" id="ldBadge" style="color:var(--ember-hi);border-color:rgba(255,160,80,.4)">🧗</span>
+    </button>
 
     <button class="btn slim" style="animation-delay:.48s" data-go="book">
       <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg></span>
@@ -480,6 +530,12 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 <section class="view" id="trail">
   <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2>TRAIL</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
   <div class="scroll nodock" id="tscroll"></div>
+</section>
+
+<!-- ===== LADDER ===== -->
+<section class="view" id="ladder">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2>LADDER</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
+  <div class="scroll nodock" id="lscroll"></div>
 </section>
 
 <!-- ===== BOOK CLUB ===== -->
@@ -582,6 +638,7 @@ function go(id){ stack.push(current); show(id); }
 function goBack(){
   if (current === "speak" && rec.state !== "idle") { rec.cancel(); }
   stopAudio();
+  if (current === "ladder" && LP) { LP = null; LRES = null; renderLadderHome(); return; }
   show(stack.pop() || "home");
 }
 function goHome(){ stack = []; stopAudio(); show("home"); }
@@ -610,7 +667,9 @@ const TOPICS = [
   "What made you smile this week?"
 ];
 let promptText = TOPICS[0], promptIsQuestion = false, questMode = null;
+var retellTarget = null;
 function setPrompt(question, quest){
+  retellTarget = null;
   promptIsQuestion = !!question; questMode = quest || null;
   promptText = question || TOPICS[(new Date().getDate() + Math.floor(Math.random()*3)) % TOPICS.length];
   document.querySelectorAll(".js-prompt").forEach(e => e.textContent = promptText);
@@ -723,6 +782,10 @@ function busy(view, on){
 async function sendSpeech(blob){
   busy("speak", true);
   try {
+    if (retellTarget) {
+      const j = await api("/api/ladder/check?id=" + encodeURIComponent(retellTarget), { method: "POST", headers: { "Content-Type": "audio/wav" }, body: blob });
+      busy("speak", false); ladderResult(j); return;
+    }
     const j = await api("/api/analyze" + analyzeQS(), { method: "POST", headers: { "Content-Type": "audio/wav" }, body: blob });
     busy("speak", false); showResult(j.result, j.progress);
   } catch(e) { busy("speak", false); toast(errText(e), 3200); notify("error"); }
@@ -735,6 +798,10 @@ wtext.addEventListener("input", () => {
 wsend.addEventListener("click", async () => {
   haptic("medium"); wtext.blur(); busy("write", true);
   try {
+    if (retellTarget) {
+      const j = await api("/api/ladder/check?id=" + encodeURIComponent(retellTarget), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: wtext.value }) });
+      busy("write", false); wtext.value = ""; wtext.dispatchEvent(new Event("input")); ladderResult(j); return;
+    }
     const j = await api("/api/analyze" + analyzeQS(), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: wtext.value }) });
     busy("write", false); wtext.value = ""; wtext.dispatchEvent(new Event("input")); showResult(j.result, j.progress);
   } catch(e) { busy("write", false); toast(errText(e), 3200); notify("error"); }
@@ -805,6 +872,8 @@ function failed(el, e){ el.innerHTML = `<div class="empty"><b>🌧</b>${esc(errT
 function updateBadges(){
   const s = progressState, bp = document.getElementById("bpBadge"), qb = document.getElementById("qBadge");
   if (bp) { bp.style.display = s.due ? "" : "none"; bp.textContent = s.due + " to review"; }
+  const lb = document.getElementById("ldBadge");
+  if (lb) lb.textContent = s.ladder_due ? s.ladder_due + " to retell" : "🧗";
   if (qb) { const done = s.quest_done || (QUEST && QUEST.done); qb.textContent = done ? "✓ DONE" : "+" + ((QUEST && QUEST.reward) || 70) + " XP"; qb.classList.toggle("ok", !!done); }
 }
 
@@ -890,7 +959,7 @@ function renderCard(){
 
 /* ---------- Trail ---------- */
 const RANK_EMOJI = ["🥾","⛺","🥾","🧭","🌲","🏔","🌌","🔥"];
-const KIND = { speak:["🎙","Speaking"], write:["✍️","Writing"], chat:["💬","Telegram chat"], book:["📖","Book page"] };
+const KIND = { speak:["🎙","Speaking"], write:["✍️","Writing"], chat:["💬","Telegram chat"], book:["📖","Book page"], ladder:["🧗","Ladder retell"] };
 let TRAIL = null;
 OPEN.trail = async () => {
   const el = document.getElementById("tscroll"); loading(el);
@@ -984,8 +1053,229 @@ function renderBook(r){
   document.getElementById("bkNext").onclick = () => { haptic(); bkCam.click(); };
 }
 
+/* ---------- Ladder: memorize a rhyming piece, then retell it ---------- */
+var LD = null, LP = null, LSTAGE = 0, LRES = null, LSELF = false, LBUSY = false, lTopic = "", lOwn = "", lShowOwn = false;
+const LSTAGES = ["Read", "Gaps", "Letters", "Russian", "Retell"];
+const LTIPS = [
+  "Прочитай вслух 2–3 раза и послушай. Выделенные фразы — те, что забираешь в рюкзак.",
+  "Расскажи кусок, вспоминая пропущенные фразы. Нажми на пропуск, чтобы подсмотреть.",
+  "Остались первые буквы. Скажи каждую строку целиком. Нажми на строку, чтобы подсмотреть.",
+  "Смотришь на перевод и говоришь по-английски. Нажми на строку, чтобы проверить себя.",
+  "Расскажи весь кусок без подсказок. Можно своими словами — главное смысл и ключевые фразы."
+];
+const lsc = () => document.getElementById("lscroll");
+const isoToday = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
+function lHuman(ds){
+  const t = isoToday(); if (!ds || ds <= t) return "today";
+  const [y, m, d] = ds.split("-").map(Number), dt = new Date(y, m - 1, d), tm = new Date(); tm.setDate(tm.getDate() + 1);
+  if (dt.toDateString() === tm.toDateString()) return "tomorrow";
+  return dt.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+}
+function lRanges(en, phrases){
+  const low = en.toLowerCase(), r = [];
+  phrases.forEach(p => { const k = p.phrase ? low.indexOf(p.phrase.toLowerCase()) : -1; if (k >= 0) r.push([k, k + p.phrase.length]); });
+  r.sort((a, b) => a[0] - b[0]); const out = []; let end = 0;
+  for (const x of r) if (x[0] >= end) { out.push(x); end = x[1]; }
+  return out;
+}
+function lMarked(en, phrases, gaps){
+  let h = "", pos = 0;
+  for (const [a, b] of lRanges(en, phrases)) {
+    h += esc(en.slice(pos, a)); const t = en.slice(a, b);
+    h += gaps ? `<button class="gapw" data-gap>${esc(t)}</button>` : `<mark>${esc(t)}</mark>`; pos = b;
+  }
+  return h + esc(en.slice(pos));
+}
+function lInitials(en){
+  return en.split(/(\s+)/).map(w => {
+    if (/^\s*$/.test(w)) return w;
+    const m = w.match(/^([^A-Za-z]*)([A-Za-z])([A-Za-z'’-]*)(.*)$/);
+    if (!m) return esc(w);
+    return esc(m[1] + m[2]) + `<span class="dots">${"_".repeat(Math.min(m[3].length, 9))}</span>` + esc(m[4]);
+  }).join("");
+}
+const lText = p => p.lines.map(l => l.en).join(" ");
+
+OPEN.ladder = () => { LP = null; LRES = null; loadLadder(); };
+async function loadLadder(){
+  const el = lsc(); loading(el);
+  try { LD = await api("/api/ladder"); if (LD.summary) setProgress(LD.summary); updateBadges(); renderLadderHome(); }
+  catch(e) { failed(el, e); }
+}
+function renderLadderHome(){
+  const d = LD, el = lsc(); if (!d) return;
+  const n = d.level, t = isoToday();
+  const steps = [2, 3, 4, 5, 6].map((k, i) => `<div class="${k < n ? "past" : k === n ? "now" : ""}" style="height:${26 + i * 12}px">${k}</div>`).join("");
+  const pips = Array.from({ length: d.up_after }, (_, i) => `<i class="${i < d.good ? "on" : ""}"></i>`).join("");
+  const rows = d.pieces.map(p => {
+    const st = !p.reviews.length ? `<span class="st">new</span>` : p.due <= t ? `<span class="st due">retell</span>` : `<span class="st ok">${esc(lHuman(p.due))}</span>`;
+    return `<div class="lrow"><div class="tx"><b>${esc(p.title)}</b><i>${p.lines.length} sentences · ${p.phrases.length} phrases</i></div>${st}
+      <button class="smallbtn" data-open="${p.id}">${p.reviews.length ? "Open" : "Learn"}</button><button class="smallbtn" data-del="${p.id}" aria-label="Delete">✕</button></div>`;
+  }).join("");
+  el.innerHTML = `
+    <section class="card"><h3>Your ladder</h3>
+      <div class="steps">${steps}</div>
+      <p>Now: ${n} sentences per piece</p>
+      <div class="tipline" style="margin-top:4px">Три хороших пересказа подряд — и кусок станет на предложение длиннее. <span class="pips">${pips}</span></div>
+      <div class="btnrow" style="margin-top:12px"><button class="smallbtn" data-lv="-1" ${n <= d.min ? "disabled" : ""}>− shorter</button><button class="smallbtn" data-lv="1" ${n >= d.max ? "disabled" : ""}>+ longer</button></div>
+    </section>
+    ${d.due.length ? `<section class="card qcard"><h3>Review today</h3><p>${d.due.length} piece${d.due.length === 1 ? "" : "s"} to retell from memory</p>
+      <div class="btnrow" style="margin-top:12px"><button class="bigbtn main" id="lRev">🔁 Start review</button></div></section>` : ""}
+    <section class="card"><h3>New piece · ${n} sentences</h3>
+      <input class="lin" id="lTopic" maxlength="120" placeholder="Topic (optional): football, my cat, a job interview" value="${esc(lTopic)}">
+      <div class="btnrow" style="margin-top:10px"><button class="bigbtn main" id="lGen" ${LBUSY ? "disabled" : ""}>${LBUSY === "gen" ? "🔥 Writing…" : "✨ Create a rhyming piece"}</button></div>
+      <button class="toggle" id="lOwnTg" style="margin-top:12px">${lShowOwn ? "hide my text" : "or paste my own English text"}</button>
+      ${lShowOwn ? `<textarea id="lOwn" style="margin-top:8px;flex:none;min-height:120px" placeholder="Paste any English text: an article, a book page, song words…">${esc(lOwn)}</textarea>
+        <div class="btnrow" style="margin-top:8px"><button class="bigbtn" id="lOwnGo" ${LBUSY ? "disabled" : ""}>${LBUSY === "own" ? "🔥 Reading…" : `📄 Take ${n} sentences from it`}</button></div>` : ""}
+    </section>
+    <section class="card"><h3>My pieces</h3>${rows || `<p class="tipline">Пока пусто. Создай первый кусок выше.</p>`}</section>`;
+}
+function openPiece(id, review){
+  LP = (LD && LD.pieces.find(p => p.id === id)) || null; if (!LP) return;
+  LSTAGE = review ? 4 : 0; LRES = null; LSELF = false; renderLadderPiece(); lsc().scrollTop = 0;
+}
+function renderLadderPiece(){
+  const p = LP, s = LSTAGE, el = lsc();
+  const tabs = `<div class="seg lseg">${LSTAGES.map((x, i) => `<button class="${i === s ? "on" : ""}" data-ls="${i}">${x}</button>`).join("")}</div>`;
+  let h = `<div class="hero"><div class="emo">🧗</div><div class="praise">${esc(p.title)}</div></div>${tabs}`;
+  if (s < 4) {
+    const lines = p.lines.map((l, i) => {
+      let body;
+      if (s === 0) body = `<div class="en">${lMarked(l.en, p.phrases, false)}<div class="ru">${esc(l.ru)}</div></div>${playBtn(l.en)}`;
+      else if (s === 1) body = `<div class="en">${lMarked(l.en, p.phrases, true)}</div>`;
+      else if (s === 2) body = `<button class="peek en" data-peek><span>${lInitials(l.en)}</span><span class="full">${esc(l.en)}</span></button>`;
+      else body = `<button class="peek en" data-peek><span class="ru" style="font-size:16px;color:var(--cream)">${esc(l.ru)}</span><span class="full">${esc(l.en)}</span></button>`;
+      return `<div class="lline"><span class="n">${i + 1}</span>${body}</div>`;
+    }).join("");
+    h += `<section class="card"><h3>${esc(LSTAGES[s])} ${playBtn(lText(p))}</h3><p class="tipline" style="margin-bottom:10px">${LTIPS[s]}</p>${lines}</section>`;
+    if (s === 0 && p.phrases.length) h += `<section class="card"><h3>Phrases for your backpack</h3>${p.phrases.map(f => `<div class="lph"><div class="tx"><b>${esc(f.phrase)}</b><span class="r">${esc(f.ru)}</span>${f.meaning ? `<i>${esc(f.meaning)}</i>` : ""}</div>${playBtn(f.phrase)}</div>`).join("")}</section>`;
+    h += `<div class="btnrow"><button class="bigbtn main" data-ls="${s + 1}">Next: ${LSTAGES[s + 1]} →</button></div>`;
+  } else if (LRES) {
+    h += ladderResultHTML(LRES);
+  } else {
+    h += `<section class="card"><h3>Retell from memory</h3><p class="tipline">${LTIPS[4]}</p>
+      <div class="btnrow" style="margin-top:12px"><button class="bigbtn main" id="lSpeak">🎙 Say it</button><button class="bigbtn" id="lWrite">✍️ Type it</button></div>
+      <button class="toggle" id="lSelf" style="margin-top:12px">${LSELF ? "hide the text" : "check myself without the coach"}</button></section>`;
+    if (LSELF) h += `<section class="card"><h3>Original ${playBtn(lText(p))}</h3>${p.lines.map((l, i) => `<div class="lline"><span class="n">${i + 1}</span><div class="en">${lMarked(l.en, p.phrases, false)}</div></div>`).join("")}
+      <p class="tipline" style="margin:10px 0">Сравни со своим пересказом и оцени честно:</p>
+      <div class="btnrow"><button class="bigbtn" data-g="again">🔁 Again</button><button class="bigbtn" data-g="ok">👍 OK</button><button class="bigbtn main" data-g="good">✅ Good</button></div></section>`;
+  }
+  el.innerHTML = h; wirePlays(el);
+  el.querySelectorAll(".card").forEach((c, i) => c.style.animationDelay = (.04 + i * .06) + "s");
+}
+function ladderResultHTML(j){
+  const r = j.result || {}, sm = j.summary || {};
+  const g = { good: "✅ Great", ok: "👍 Not bad", again: "🔁 Once more" }[r.grade] || "🔥 Done";
+  const used = r.phrases_used || [], miss = r.phrases_missed || [], ms = Array.isArray(r.mistakes) ? r.mistakes : [], mi = r.missed_ideas || [];
+  const more = LD && LD.due.filter(id => !LP || id !== LP.id).length;
+  return `<div class="hero"><div class="emo">${esc(r.emojis || "🔥")}</div>${r.score != null ? `<div class="lscore">${Number(r.score) || 0}</div>` : ""}
+      <div class="praise">${esc(r.praise || "")}</div>
+      <div class="gain"><span class="pill">${g}</span>${sm.gained ? `<span class="pill">+${sm.gained} XP</span>` : ""}<span class="pill">📅 next: ${esc(lHuman(j.due))}</span>
+      ${j.level_up ? `<span class="pill">🧗 Now ${j.level} sentences!</span>` : ""}${sm.words_added && sm.words_added.length ? `<span class="pill">🎒 +${sm.words_added.length} words</span>` : ""}</div></div>
+    ${r.transcript ? `<section class="card"><h3>You said</h3><p class="said">“${esc(r.transcript)}”</p></section>` : ""}
+    ${used.length || miss.length ? `<section class="card"><h3>Key phrases</h3><div class="chips3">${used.map(x => `<span>✓ ${esc(x)}</span>`).join("")}${miss.map(x => `<span class="miss">${esc(x)}</span>`).join("")}</div></section>` : ""}
+    ${mi.length ? `<section class="card"><h3>You left out</h3>${mi.map(x => `<p class="tipline" style="color:var(--cream)">• ${esc(x)}</p>`).join("")}</section>` : ""}
+    ${ms.length ? `<section class="card"><h3>Fix these</h3>${ms.map(m => `<div class="fix"><div class="w">${esc(m.wrong)}</div><div class="r">${esc(m.right)}</div>${m.why ? `<div class="y">${esc(m.why)}</div>` : ""}</div>`).join("")}</section>` : ""}
+    ${r.native_version ? `<section class="card"><h3>Say it like this ${playBtn(r.native_version)}</h3><p class="native">${esc(r.native_version)}</p></section>` : ""}
+    <section class="card"><h3>Original ${playBtn(lText(LP))}</h3>${LP.lines.map((l, i) => `<div class="lline"><span class="n">${i + 1}</span><div class="en">${lMarked(l.en, LP.phrases, false)}</div></div>`).join("")}</section>
+    <div class="btnrow"><button class="bigbtn" id="lAgain">🔁 Retell again</button><button class="bigbtn main" id="lNext">${more ? "Next review →" : "Done"}</button></div>`;
+}
+function ladderResult(j){
+  retellTarget = null; LRES = j; LSTAGE = 4; LSELF = false;
+  if (j.summary) setProgress(j.summary);
+  if (LD) { LD.level = j.level != null ? j.level : LD.level; LD.good = j.good != null ? j.good : LD.good;
+    if (LP) { LD.due = LD.due.filter(id => id !== LP.id); if (j.due && j.due <= isoToday()) LD.due.push(LP.id);
+      LP.reviews = (LP.reviews || []).concat([{ d: isoToday() }]); LP.due = j.due || LP.due; } }
+  updateBadges(); notify("success");
+  stack = ["home"]; show("ladder"); renderLadderPiece(); lsc().scrollTop = 0;
+}
+function startRetell(view){
+  haptic("medium"); setPrompt(null);
+  retellTarget = LP.id; promptText = "Retell “" + LP.title + "” from memory";
+  document.querySelectorAll(".js-prompt").forEach(e => e.textContent = promptText);
+  document.querySelectorAll(".js-plabel").forEach(e => e.textContent = "🧗 Ladder retell");
+  document.querySelectorAll(".js-qwords").forEach(e => e.innerHTML = LP.phrases.map(f => `<span>${esc(f.phrase)}</span>`).join(""));
+  document.querySelectorAll(".js-shuffle").forEach(e => e.style.display = "none");
+  stack = ["home", "ladder"]; show(view);
+  if (view === "write") setTimeout(() => wtext.focus(), 350);
+}
+async function lCreate(own){
+  if (LBUSY) return;
+  if (own && lOwn.trim().length < 40) { toast("Вставьте текст подлиннее — хотя бы пару предложений"); return; }
+  LBUSY = own ? "own" : "gen"; renderLadderHome(); haptic("medium");
+  try {
+    const j = await api("/api/ladder/new", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(own ? { text: lOwn } : { topic: lTopic.trim() }) });
+    LBUSY = false; if (own) { lOwn = ""; lShowOwn = false; }
+    LD.pieces.unshift(j.piece); notify("success"); openPiece(j.piece.id, false);
+  } catch(e) { LBUSY = false; renderLadderHome(); toast(errText(e), 3200); notify("error"); }
+}
+lsc().addEventListener("input", e => {
+  if (e.target.id === "lTopic") lTopic = e.target.value;
+  if (e.target.id === "lOwn") lOwn = e.target.value;
+});
+lsc().addEventListener("click", async e => {
+  const t = e.target.closest("button"); if (!t || t.classList.contains("play")) return;
+  const ds = t.dataset;
+  if ("gap" in ds || "peek" in ds) { haptic(); t.classList.toggle("open"); return; }
+  if (ds.ls != null) { haptic(); stopAudio(); LSTAGE = Math.min(4, +ds.ls); renderLadderPiece(); lsc().scrollTop = 0; return; }
+  if (ds.open) { haptic(); openPiece(ds.open, !!(LD.pieces.find(p => p.id === ds.open) || {}).reviews?.length); return; }
+  if (ds.del) {
+    if (!t.classList.contains("arm")) { t.classList.add("arm"); t.textContent = "delete?"; setTimeout(() => { t.classList.remove("arm"); t.textContent = "✕"; }, 2500); return; }
+    haptic("medium"); LD.pieces = LD.pieces.filter(p => p.id !== ds.del); LD.due = LD.due.filter(id => id !== ds.del); renderLadderHome();
+    try { await api("/api/ladder/remove", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: ds.del }) }); } catch(x) {}
+    return;
+  }
+  if (ds.lv) {
+    haptic();
+    try { const j = await api("/api/ladder/level", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ delta: +ds.lv }) });
+      LD = Object.assign(LD, { level: j.level, good: j.good }); renderLadderHome(); } catch(x) { toast(errText(x)); }
+    return;
+  }
+  if (ds.g) {
+    haptic("medium");
+    try { const j = await api("/api/ladder/self", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: LP.id, grade: ds.g }) });
+      ladderResult(Object.assign({ result: { grade: ds.g, emojis: "🪞", praise: "Self-check saved" } }, j)); } catch(x) { toast(errText(x)); }
+    return;
+  }
+  switch (t.id) {
+    case "lGen": lCreate(false); break;
+    case "lOwnGo": lCreate(true); break;
+    case "lOwnTg": haptic(); lShowOwn = !lShowOwn; renderLadderHome(); break;
+    case "lRev": haptic(); openPiece(LD.due[0], true); break;
+    case "lSpeak": startRetell("speak"); break;
+    case "lWrite": startRetell("write"); break;
+    case "lSelf": haptic(); LSELF = !LSELF; renderLadderPiece(); break;
+    case "lAgain": haptic(); LRES = null; renderLadderPiece(); break;
+    case "lNext": { haptic(); const next = LD.due.find(id => id !== LP.id);
+      if (next) openPiece(next, true); else { LP = null; LRES = null; renderLadderHome(); lsc().scrollTop = 0; }
+      break; }
+  }
+});
+
 /* ================= demo mode (?demo) ================= */
+const DEMO_LADDER = { level: 2, good: 1, up_after: 3, min: 2, max: 6, due: ["d2"], summary: {}, pieces: [
+  { id: "d1", title: "Late for Nothing", created: "2026-11-09", step: 0, due: "2026-11-09", reviews: [],
+    lines: [{ en: "I was running late, so I grabbed my keys and headed for the door,", ru: "Я опаздывал, так что схватил ключи и направился к двери," },
+            { en: "but it turned out the meeting had been cancelled an hour before.", ru: "но оказалось, что встречу отменили ещё за час до этого." }],
+    phrases: [{ phrase: "running late", ru: "опаздывать", meaning: "be late, informal" }, { phrase: "headed for", ru: "направиться к", meaning: "went towards" }, { phrase: "it turned out", ru: "оказалось", meaning: "it became clear" }] },
+  { id: "d2", title: "The Lost Umbrella", created: "2026-11-06", step: 1, due: "2026-11-08", reviews: [{ d: "2026-11-06", g: "good" }],
+    lines: [{ en: "I left my umbrella on the train and couldn't help but laugh,", ru: "Я оставил зонт в поезде и не мог не рассмеяться," },
+            { en: "because the rain had stopped and the sun came out at half past.", ru: "потому что дождь кончился и в половине выглянуло солнце." }],
+    phrases: [{ phrase: "couldn't help but", ru: "не мог не", meaning: "had to, could not stop myself" }, { phrase: "came out", ru: "выглянуло", meaning: "appeared" }] } ] };
 async function demoApi(path){
+  if (path.startsWith("/api/ladder")) {
+    await new Promise(r => setTimeout(r, 500));
+    if (path === "/api/ladder") return Object.assign({ ok: true }, DEMO_LADDER);
+    if (path === "/api/ladder/new") return { ok: true, piece: Object.assign({}, DEMO_LADDER.pieces[0], { id: "n" + Date.now(), title: "Late for Nothing (demo)" }) };
+    if (path === "/api/ladder/level") return { ok: true, level: 3, good: 0 };
+    if (path === "/api/ladder/remove") return { ok: true };
+    const tm = new Date(); tm.setDate(tm.getDate() + 1);
+    return { ok: true, due: tm.toISOString().slice(0, 10), level: 2, good: 2, level_up: false, summary: { gained: 25, words_added: ["running late", "headed for"] },
+      result: { score: 84, grade: "good", emojis: "⏰🚪😅", praise: "You kept the whole story and the rhyme!", transcript: "I was running late so I took my keys and go to the door, but it turned out the meeting was cancelled before.",
+        phrases_used: ["running late", "it turned out"], phrases_missed: ["headed for"], missed_ideas: ["You did not say it was cancelled an hour before."],
+        mistakes: [{ wrong: "go to the door", right: "went to the door", why: "Past tense in a past story" }],
+        native_version: "I was running late, so I grabbed my keys and headed for the door, but it turned out the meeting had been cancelled before." } };
+  }
   await new Promise(r => setTimeout(r, path === "/api/me" ? 50 : 900));
   if (path === "/api/me") return { ok:true, name:"Dima", quest:{ reward:70, done:false }, progress:{ streak:3, level:2, xp_in_level:120, xp_next:200, due:4, week:[1,1,1,0,0,0,0], today_index:(new Date().getDay()+6)%7 } };
   if (path === "/api/tts") throw new Error("tts");

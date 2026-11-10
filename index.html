@@ -157,7 +157,7 @@ body.away .ui{opacity:0;transform:scale(.97);pointer-events:none}
   background:linear-gradient(180deg,rgba(255,150,60,.14),rgba(255,120,40,.05));border:1px solid rgba(255,160,80,.3)}
 .prompt small{display:block;font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--ember-hi);margin-bottom:6px}
 .prompt p{font-size:17px;font-weight:800;line-height:1.35}
-.prompt .shuffle{margin-top:10px;background:none;border:none;color:var(--muted);font:inherit;font-size:12px;font-weight:800;cursor:pointer;padding:0}
+.prompt .shuffle{margin:10px 14px 0 0;background:none;border:none;color:var(--muted);font:inherit;font-size:12px;font-weight:800;cursor:pointer;padding:0}
 
 /* recorder */
 .rec{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
@@ -481,7 +481,7 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
   <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     <h2>SPEAK</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
   <div class="prompt"><small class="js-plabel">Today's topic</small><p class="js-prompt">Tell me about your day.</p><div class="qwords js-qwords"></div>
-    <button class="shuffle js-shuffle">↻ another topic</button></div>
+    <button class="shuffle js-shuffle">↻ another topic</button><button class="shuffle js-free">🗣 no topic, my own phrase</button></div>
   <div class="rec">
     <div class="timer" id="timer"></div>
     <button class="mic" id="mic" aria-label="Record"><span class="ring"></span><span class="ring r2"></span><span class="ring r3"></span>
@@ -501,7 +501,7 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
   <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     <h2>WRITE</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
   <div class="prompt"><small class="js-plabel">Today's topic</small><p class="js-prompt">Tell me about your day.</p><div class="qwords js-qwords"></div>
-    <button class="shuffle js-shuffle">↻ another topic</button></div>
+    <button class="shuffle js-shuffle">↻ another topic</button><button class="shuffle js-free">🗣 no topic, my own phrase</button></div>
   <div class="writebox">
     <textarea id="wtext" placeholder="Write a few sentences in English…" maxlength="3000"></textarea>
     <div class="wcount" id="wcount">0 words</div>
@@ -591,6 +591,7 @@ function errText(e){
   if (m === "forbidden") return "Нет доступа — откройте приложение через бота";
   if (m === "location") return "Gemini недоступен из текущей страны — проверьте VPN";
   if (m === "too_short") return "Слишком коротко — скажите хотя бы пару фраз";
+  if (m === "bad_youtube") return "Не похоже на ссылку YouTube — скопируйте её через «Поделиться» в YouTube";
   if (m.startsWith("Failed to fetch") || m.includes("NetworkError") || m.includes("Load failed")) return "Адрес сервера обновился — закройте приложение и откройте его кнопкой «🔥 Open Camp English» в чате с ботом";
   return "Не получилось — попробуйте ещё раз";
 }
@@ -675,21 +676,40 @@ const TOPICS = [
 ];
 let promptText = TOPICS[0], promptIsQuestion = false, questMode = null;
 var retellTarget = null;
+/* free talk: no topic at all — say any phrase and hear how a native would say it */
+const FREE_TEXT = "Say anything you like — any phrase you want to say in English.";
+let freeTalk = true;
+try { freeTalk = localStorage.getItem("camp_free") !== "0"; } catch(e) {}
+function showTopicUI(){
+  const free = freeTalk && !promptIsQuestion && !questMode && !retellTarget;
+  if (free) promptText = FREE_TEXT;
+  document.querySelectorAll(".js-prompt").forEach(e => e.textContent = promptText);
+  document.querySelectorAll(".js-plabel").forEach(e => e.textContent = retellTarget ? "🧗 Ladder retell" : questMode ? "🎯 Daily quest" : promptIsQuestion ? "Coach's question · optional" : free ? "🗣 Free talk" : "Topic idea · optional");
+  document.querySelectorAll(".js-shuffle").forEach(e => { e.style.display = questMode || retellTarget ? "none" : ""; e.textContent = free ? "💡 give me a topic" : "↻ another topic"; });
+  document.querySelectorAll(".js-free").forEach(e => e.style.display = free || questMode || retellTarget ? "none" : "");
+}
 function setPrompt(question, quest){
   retellTarget = null;
   promptIsQuestion = !!question; questMode = quest || null;
   promptText = question || TOPICS[(new Date().getDate() + Math.floor(Math.random()*3)) % TOPICS.length];
-  document.querySelectorAll(".js-prompt").forEach(e => e.textContent = promptText);
-  document.querySelectorAll(".js-plabel").forEach(e => e.textContent = quest ? "🎯 Daily quest" : question ? "Answer the question" : "Today's topic");
   document.querySelectorAll(".js-qwords").forEach(e => e.innerHTML = quest ? quest.words.map(w => `<span>${esc(w)}</span>`).join("") : "");
-  document.querySelectorAll(".js-shuffle").forEach(e => e.style.display = quest ? "none" : "");
+  showTopicUI();
 }
-function analyzeQS(){ return "?prompt=" + encodeURIComponent(promptText.slice(0, 300)) + (questMode ? "&quest=1" : ""); }
+function analyzeQS(){
+  const free = promptText === FREE_TEXT;
+  return "?prompt=" + (free ? "" : encodeURIComponent(promptText.slice(0, 300))) + (questMode ? "&quest=1" : "");
+}
 document.querySelectorAll(".js-shuffle").forEach(b => b.addEventListener("click", () => {
   haptic(); let t; do { t = TOPICS[Math.floor(Math.random()*TOPICS.length)]; } while (t === promptText);
   promptIsQuestion = false; questMode = null; promptText = t;
-  document.querySelectorAll(".js-prompt").forEach(e => e.textContent = t);
-  document.querySelectorAll(".js-plabel").forEach(e => e.textContent = "Today's topic");
+  freeTalk = false; try { localStorage.setItem("camp_free", "0"); } catch(e) {}
+  showTopicUI();
+}));
+document.querySelectorAll(".js-free").forEach(b => b.addEventListener("click", () => {
+  haptic(); promptIsQuestion = false; questMode = null;
+  document.querySelectorAll(".js-qwords").forEach(e => e.innerHTML = "");
+  freeTalk = true; try { localStorage.setItem("camp_free", "1"); } catch(e) {}
+  showTopicUI();
 }));
 
 /* ================= recorder (WAV, 16 kHz mono) ================= */
@@ -1061,7 +1081,7 @@ function renderBook(r){
 }
 
 /* ---------- Ladder: memorize a rhyming piece, then retell it ---------- */
-var LD = null, LP = null, LSTAGE = 0, LRES = null, LSELF = false, LBUSY = false, lTopic = "", lOwn = "", lShowOwn = false;
+var LD = null, LP = null, LSTAGE = 0, LRES = null, LSELF = false, LBUSY = false, lTopic = "", lOwn = "", lShowOwn = false, lYt = "";
 const LSTAGES = ["Read", "Gaps", "Hide", "Russian", "Retell"];
 const LTIPS = [
   "Прочитай вслух 2–3 раза и послушай. Выделенные фразы — те, что забираешь в рюкзак.",
@@ -1175,6 +1195,9 @@ function renderLadderHome(){
     <section class="card"><h3>New piece · ${n} sentences</h3>
       <input class="lin" id="lTopic" maxlength="120" placeholder="Topic (optional): football, my cat, a job interview" value="${esc(lTopic)}">
       <div class="btnrow" style="margin-top:10px"><button class="bigbtn main" id="lGen" ${LBUSY ? "disabled" : ""}>${LBUSY === "gen" ? "🔥 Writing…" : "✨ Create a rhyming piece"}</button></div>
+      <div class="tipline" style="margin-top:14px">Или из видео: вставь ссылку YouTube — бот возьмёт живые фразы из ролика и сложит из них рифмованный кусок.</div>
+      <input class="lin" id="lYt" style="margin-top:8px" inputmode="url" placeholder="https://youtu.be/…" value="${esc(lYt)}">
+      <div class="btnrow" style="margin-top:8px"><button class="bigbtn" id="lYtGo" ${LBUSY ? "disabled" : ""}>${LBUSY === "yt" ? "🔥 Watching the video…" : "▶ Make a piece from this video"}</button></div>
       <button class="toggle" id="lOwnTg" style="margin-top:12px">${lShowOwn ? "hide my text" : "or paste my own English text"}</button>
       ${lShowOwn ? `<textarea id="lOwn" style="margin-top:8px;flex:none;min-height:120px" placeholder="Paste any English text: an article, a book page, song words…">${esc(lOwn)}</textarea>
         <div class="btnrow" style="margin-top:8px"><button class="bigbtn" id="lOwnGo" ${LBUSY ? "disabled" : ""}>${LBUSY === "own" ? "🔥 Reading…" : `📄 Take ${n} sentences from it`}</button></div>` : ""}
@@ -1188,7 +1211,7 @@ function openPiece(id, review){
 function renderLadderPiece(){
   const p = LP, s = LSTAGE, el = lsc();
   const tabs = `<div class="seg lseg">${LSTAGES.map((x, i) => `<button class="${i === s ? "on" : ""}" data-ls="${i}">${x}</button>`).join("")}</div>`;
-  let h = `<div class="hero"><div class="emo">🧗</div><div class="praise">${esc(p.title)}</div></div>${tabs}`;
+  let h = `<div class="hero"><div class="emo">🧗</div><div class="praise">${esc(p.title)}</div>${p.source ? `<button class="smallbtn" data-yt="${esc(p.source)}" style="margin-top:8px">▶ Watch the video</button>` : ""}</div>${tabs}`;
   if (s < 4) {
     const lines = p.lines.map((l, i) => {
       let body;
@@ -1244,32 +1267,34 @@ function ladderResult(j){
 }
 function startRetell(view){
   haptic("medium"); setPrompt(null);
-  retellTarget = LP.id; promptText = "Retell “" + LP.title + "” from memory";
-  document.querySelectorAll(".js-prompt").forEach(e => e.textContent = promptText);
-  document.querySelectorAll(".js-plabel").forEach(e => e.textContent = "🧗 Ladder retell");
+  retellTarget = LP.id; promptText = "Retell “" + LP.title + "” from memory"; showTopicUI();
   document.querySelectorAll(".js-qwords").forEach(e => e.innerHTML = LP.phrases.map(f => `<span>${esc(f.phrase)}</span>`).join(""));
-  document.querySelectorAll(".js-shuffle").forEach(e => e.style.display = "none");
   stack = ["home", "ladder"]; show(view);
   if (view === "write") setTimeout(() => wtext.focus(), 350);
 }
 async function lCreate(own){
   if (LBUSY) return;
-  if (own && lOwn.trim().length < 40) { toast("Вставьте текст подлиннее — хотя бы пару предложений"); return; }
-  LBUSY = own ? "own" : "gen"; renderLadderHome(); haptic("medium");
+  const yt = own === "yt";
+  if (yt && !/youtu\.?be/i.test(lYt)) { toast("Вставьте ссылку на ролик YouTube"); return; }
+  if (own === true && lOwn.trim().length < 40) { toast("Вставьте текст подлиннее — хотя бы пару предложений"); return; }
+  LBUSY = yt ? "yt" : own ? "own" : "gen"; renderLadderHome(); haptic("medium");
   try {
-    const j = await api("/api/ladder/new", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(own ? { text: lOwn } : { topic: lTopic.trim() }) });
-    LBUSY = false; if (own) { lOwn = ""; lShowOwn = false; }
+    const body = yt ? { youtube: lYt.trim() } : own ? { text: lOwn } : { topic: lTopic.trim() };
+    const j = await api("/api/ladder/new", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    LBUSY = false; if (yt) lYt = ""; else if (own) { lOwn = ""; lShowOwn = false; }
     LD.pieces.unshift(j.piece); notify("success"); openPiece(j.piece.id, false);
   } catch(e) { LBUSY = false; renderLadderHome(); toast(errText(e), 3200); notify("error"); }
 }
 lsc().addEventListener("input", e => {
   if (e.target.id === "lTopic") lTopic = e.target.value;
   if (e.target.id === "lOwn") lOwn = e.target.value;
+  if (e.target.id === "lYt") lYt = e.target.value;
 });
 lsc().addEventListener("click", async e => {
   const t = e.target.closest("button"); if (!t || t.classList.contains("play")) return;
   const ds = t.dataset;
   if ("gap" in ds || "peek" in ds) { haptic(); t.classList.toggle("open"); return; }
+  if (ds.yt) { haptic(); try { tg && tg.openLink ? tg.openLink(ds.yt) : window.open(ds.yt, "_blank"); } catch(x) { window.open(ds.yt, "_blank"); } return; }
   if (t.id === "hClose" || t.id === "hOpen") { haptic("medium"); hSet(t.id === "hOpen" ? "s2" : ""); return; }
   if (ds.ls != null) { haptic(); stopAudio(); LSTAGE = Math.min(4, +ds.ls); renderLadderPiece(); lsc().scrollTop = 0; return; }
   if (ds.open) { haptic(); openPiece(ds.open, !!(LD.pieces.find(p => p.id === ds.open) || {}).reviews?.length); return; }
@@ -1294,6 +1319,7 @@ lsc().addEventListener("click", async e => {
   switch (t.id) {
     case "lGen": lCreate(false); break;
     case "lOwnGo": lCreate(true); break;
+    case "lYtGo": lCreate("yt"); break;
     case "lOwnTg": haptic(); lShowOwn = !lShowOwn; renderLadderHome(); break;
     case "lRev": haptic(); openPiece(LD.due[0], true); break;
     case "lSpeak": startRetell("speak"); break;
@@ -1316,11 +1342,11 @@ const DEMO_LADDER = { level: 2, good: 1, up_after: 3, min: 2, max: 6, due: ["d2"
     lines: [{ en: "I left my umbrella on the train and couldn't help but laugh,", ru: "Я оставил зонт в поезде и не мог не рассмеяться," },
             { en: "because the rain had stopped and the sun came out at half past.", ru: "потому что дождь кончился и в половине выглянуло солнце." }],
     phrases: [{ phrase: "couldn't help but", ru: "не мог не", meaning: "had to, could not stop myself" }, { phrase: "came out", ru: "выглянуло", meaning: "appeared" }] } ] };
-async function demoApi(path){
+async function demoApi(path, opts){
   if (path.startsWith("/api/ladder")) {
     await new Promise(r => setTimeout(r, 500));
     if (path === "/api/ladder") return Object.assign({ ok: true }, DEMO_LADDER);
-    if (path === "/api/ladder/new") return { ok: true, piece: Object.assign({}, DEMO_LADDER.pieces[0], { id: "n" + Date.now(), title: "Late for Nothing (demo)" }) };
+    if (path === "/api/ladder/new") return { ok: true, piece: Object.assign({}, DEMO_LADDER.pieces[0], { id: "n" + Date.now(), title: "Late for Nothing (demo)" }, String(opts && opts.body || "").includes("youtube") ? { source: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" } : {}) };
     if (path === "/api/ladder/level") return { ok: true, level: 3, good: 0 };
     if (path === "/api/ladder/remove") return { ok: true };
     const tm = new Date(); tm.setDate(tm.getDate() + 1);

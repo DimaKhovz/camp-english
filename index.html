@@ -689,7 +689,7 @@ function errText(e){
   if (m === "timeout") return "Сервер долго думает — попробуйте открыть видео ещё раз через минуту";
   if (m === "not_found") return "Видео не найдено — добавьте его заново";
   if (m === "bad_youtube") return "Не похоже на ссылку YouTube — скопируйте её через «Поделиться» в YouTube";
-  if (m.startsWith("Failed to fetch") || m.includes("NetworkError") || m.includes("Load failed")) return "Адрес сервера обновился — закройте приложение и откройте его кнопкой «🔥 Open Camp English» в чате с ботом";
+  if (m.startsWith("Failed to fetch") || m.includes("NetworkError") || m.includes("Load failed")) return "Сервер не отвечает. Закройте приложение и откройте заново кнопкой «🔥 Camp» в чате с ботом. Не помогло — значит, бот на компьютере выключен: компьютер должен быть включён.";
   return "Не получилось — попробуйте ещё раз";
 }
 

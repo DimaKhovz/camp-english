@@ -448,6 +448,28 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 .vtr p small{flex:none;width:38px;color:var(--muted);font-weight:800;font-size:11.5px;padding-top:3px}
 .vtr p.now{color:var(--ember-hi)}.vtr p.ok span{color:#8fe3c8}
 .vtr p span i{display:block;font-style:normal;color:var(--muted);font-size:13px}
+.vp-keys{display:none;margin-top:12px;font-size:12.5px;font-weight:700;color:var(--muted);text-align:center}
+.vp-keys b{color:var(--cream);background:rgba(255,255,255,.08);border-radius:5px;padding:0 5px}
+/* wide screens (Telegram Desktop, full screen): big video, big line, transcript on the right */
+@media (min-width:820px){
+  #vplay .vhead{max-width:1500px}
+  #vpScroll{max-width:1500px;display:flex;flex-direction:row;align-items:flex-start;gap:22px;padding-bottom:24px}
+  #vpScroll > .vp-main{flex:1;min-width:0;display:flex;flex-direction:column}
+  #vpScroll > .vp-side{width:340px;flex:none;position:sticky;top:0;max-height:calc(100vh - 110px);overflow-y:auto;scrollbar-width:thin}
+  #vpScroll > .vp-side .card{margin-top:0 !important}
+  .vp-video{width:min(100%, calc((100vh - 420px) * 16 / 9));min-width:min(100%,460px);margin:0 auto}
+  .vp-video.small{width:min(60%, calc((100vh - 420px) * 16 / 9 * .6));min-width:0}
+  .vp-stats{margin:8px 2px 4px}
+  .vp-stats{width:100%}
+  .vp-line{font-size:29px;min-height:88px;padding:12px 22px;margin-top:10px}
+  .vp-ru{font-size:16px;margin-top:6px;min-height:22px}
+  .vp-in{height:56px;font-size:24px;max-width:760px;margin:8px auto 0}
+  .vp-wait{margin-top:4px;min-height:16px}
+  .vp-ctl{max-width:560px;width:100%;margin:6px auto 0}
+  .vp-opts{justify-content:center}
+  .vp-keys{display:block}
+}
+@media (min-width:820px) and (max-height:640px){ .vp-video{min-width:min(100%,360px)} }
 .vdone{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(4,8,18,.72);backdrop-filter:blur(6px)}
 .vdone.on{display:flex}
 .vdone .card{width:100%;max-width:380px;text-align:center}
@@ -607,8 +629,8 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 
 <!-- ===== VIDEO TYPE: player ===== -->
 <section class="view" id="vplay">
-  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="vpTitle">TYPE</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
-  <div class="scroll nodock" id="vpScroll">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="vpTitle">TYPE</h2><span class="sp"></span><button class="iconbtn" id="vpFull" aria-label="Full screen" style="display:none;font-size:17px">⛶</button><span class="pill">🔥 <b class="js-streak">0</b></span></div>
+  <div class="scroll nodock" id="vpScroll"><div class="vp-main">
     <div class="vp-video" id="vpVideo"><div id="ytbox"></div></div>
     <div class="vp-stats"><div>LINE<b id="vpLine">0/0</b></div><div>WPM<b id="vpWpm">0</b></div><div>ACCURACY<b id="vpAcc">100%</b></div><span class="sp"></span><div style="text-align:right">TIME<b id="vpTime">0:00</b></div></div>
     <div class="vp-bar"><i id="vpBar"></i></div>
@@ -626,8 +648,10 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
       <select id="vpRate" aria-label="Speed"><option value="1">1×</option><option value="0.85">0.85×</option><option value="0.75">0.75×</option><option value="0.5">0.5×</option></select>
       <button data-vo="ru">RU</button><button data-vo="loop">🔁 Auto-replay</button><button data-vo="sound">🔊</button><button data-vo="small">📺 Small video</button>
     </div>
+    <div class="vp-keys">Клавиши: <b>Esc</b> пауза · <b>Tab</b> переслушать строку · <b>Ctrl+→ / Ctrl+←</b> следующая / предыдущая · <b>Ctrl+H</b> подсказка</div>
+  </div><aside class="vp-side">
     <section class="card" style="margin-top:14px"><h3>Transcript</h3><div class="vtr" id="vpTr"></div></section>
-  </div>
+  </aside></div>
   <div class="vdone" id="vpDone"><div class="card"><div class="hero"><div class="emo">🎬🔥</div><div class="praise" id="vdTitle">Video done!</div></div>
     <div class="big"><div><b id="vdWpm">0</b>WPM</div><div><b id="vdAcc">0%</b>ACCURACY</div><div><b id="vdXp">+0</b>XP</div></div>
     <div class="btnrow"><button class="bigbtn" id="vdAgain">🔁 Again</button><button class="bigbtn main" id="vdBack">Done</button></div></div></div>
@@ -1634,10 +1658,29 @@ vIn.addEventListener("input", () => {
   if (!vPlaying() && !VP.waiting && !VP.userPaused) vPlay();
   vProcess();
 });
+const vDesktop = () => matchMedia("(hover:hover) and (pointer:fine)").matches;
+document.querySelector(".vp-opts").addEventListener("change", () => { if (vDesktop() && VO.mode !== "watch") setTimeout(() => vIn.focus({ preventScroll: true }), 50); });
+document.querySelector(".vp-opts").addEventListener("click", e => { if (e.target.closest("button") && vDesktop() && VO.mode !== "watch") setTimeout(() => vIn.focus({ preventScroll: true }), 50); });
+function vCmd(c){ const b = document.querySelector(`[data-vc="${c}"]`); if (b) b.click(); }
 vIn.addEventListener("keydown", e => {
   if (e.key === "Enter") { e.preventDefault(); return; }
-  if (e.key === "Escape") { e.preventDefault(); vToggle(); }
+  if (e.key === "Escape") { e.preventDefault(); vToggle(); return; }
+  if (e.key === "Tab") { e.preventDefault(); vCmd("replay"); return; }
+  if ((e.ctrlKey || e.metaKey) && e.key === "ArrowRight") { e.preventDefault(); vCmd("next"); return; }
+  if ((e.ctrlKey || e.metaKey) && e.key === "ArrowLeft") { e.preventDefault(); vCmd("prev"); return; }
+  if ((e.ctrlKey || e.metaKey) && (e.key === "h" || e.key === "H" || e.code === "KeyH")) { e.preventDefault(); vCmd("hint"); }
 });
+/* Telegram Desktop opens mini apps in a small phone-sized window: offer full screen there */
+(function(){
+  const b = $v("vpFull"), can = tg && tg.isVersionAtLeast && tg.isVersionAtLeast("8.0") && typeof tg.requestFullscreen === "function";
+  const isPC = can && ["tdesktop", "macos", "weba", "webk", "web"].includes(tg.platform);
+  if (!isPC) return;
+  b.style.display = "";
+  const upd = () => { b.textContent = tg.isFullscreen ? "🗗" : "⛶"; b.setAttribute("aria-label", tg.isFullscreen ? "Exit full screen" : "Full screen"); };
+  b.addEventListener("click", () => { haptic(); try { tg.isFullscreen ? tg.exitFullscreen() : tg.requestFullscreen(); } catch(e) { toast("Полноэкранный режим недоступен — растяните окно мышкой"); } });
+  try { tg.onEvent("fullscreenChanged", upd); tg.onEvent("fullscreenFailed", () => toast("Полноэкранный режим недоступен — растяните окно мышкой")); } catch(e) {}
+  upd();
+})();
 function vLineDone(){
   VP.done.add(VP.i); haptic("light");
   const el = $v("vpText"); el.classList.remove("vfl"); void el.offsetWidth; el.classList.add("vfl");
@@ -1694,6 +1737,7 @@ async function vOpen(v, stats){
   $v("vpTitle").textContent = "TYPE"; $v("vpDone").classList.remove("on"); $v("vpWait").textContent = start ? "Продолжаем с места, где остановился. ⏮ — назад." : "";
   vSyncOpts(); renderTranscript(); vSetLine(start); vStats();
   stack = ["home", "video"]; show("vplay"); $v("vpScroll").scrollTop = 0;
+  if (vDesktop() && VO.mode !== "watch") setTimeout(() => vIn.focus({ preventScroll: true }), 400);
   $v("vpVideo").innerHTML = '<div id="ytbox"></div>';
   if (ytP) { try { ytP.destroy(); } catch(e) {} ytP = null; }
   ytReady = false; clearInterval(vTick);
@@ -1771,11 +1815,11 @@ document.querySelectorAll("[data-vc]").forEach(b => {
 $v("vpTr").addEventListener("click", e => {
   const p = e.target.closest("[data-vl]"); if (!p || !VP) return;
   haptic(); VP.userPaused = false; vSetLine(+p.dataset.vl); vSeek(VP.v.lines[VP.i].s); vPlay(); $v("vpWait").textContent = "";
-  $v("vpScroll").scrollTo({ top: 0, behavior: "smooth" });
+  if (vDesktop()) vIn.focus({ preventScroll: true }); else $v("vpScroll").scrollTo({ top: 0, behavior: "smooth" });
 });
 $v("vdAgain").addEventListener("click", () => { haptic("medium"); $v("vpDone").classList.remove("on"); vFinishReset(); renderTranscript(); vSetLine(0); vStats(); vSeek(VP.v.lines[0].s); vPlay(); });
 $v("vdBack").addEventListener("click", () => { haptic(); goBack(); });
-vIn.addEventListener("focus", () => setTimeout(() => $v("vpText").scrollIntoView({ block: "center", behavior: "smooth" }), 300));
+vIn.addEventListener("focus", () => { if (!vDesktop()) setTimeout(() => $v("vpText").scrollIntoView({ block: "center", behavior: "smooth" }), 300); });
 
 const DEMO_VIDEO = { yt: "at_f98qOGY0", title: "Demo video (made-up lines)", channel: "Demo", lines: [
   { s: 2.0, e: 5.0, en: "This is a demo line, not the real words.", ru: "Это демо-строка, не настоящие слова." },

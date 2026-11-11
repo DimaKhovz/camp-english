@@ -399,6 +399,60 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 .dq:first-of-type{border-top:none;padding-top:0}
 .dq p{flex:1;font-size:15px !important;font-weight:700 !important}
 .dq button{height:34px;padding:0 12px;border-radius:12px;border:none;font:inherit;font-weight:800;font-size:13px;color:#2b1104;cursor:pointer;background:linear-gradient(180deg,#ffb257,#ff8a2a)}
+/* ---------- Video Type ---------- */
+.vadd{display:flex;gap:8px;margin-top:4px}.vadd .lin{flex:1;margin:0}
+.vadd .smallbtn{height:44px;padding:0 14px}
+.vrow{display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,.07)}
+.vrow:first-of-type{border-top:none}
+.vrow img{width:92px;height:52px;border-radius:9px;object-fit:cover;flex:none;background:#0b1222}
+.vrow .tx{flex:1;min-width:0}.vrow .tx b{display:block;font-size:14.5px;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.vrow .tx i{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:3px}
+.vrow .tx,.vrow img{cursor:pointer}
+#vplay .scroll{padding-top:8px}
+.vp-video{width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;flex:none;transition:width .25s}
+.vp-video.small{width:46%;margin:0 auto}
+.vp-video iframe,.vp-video>div{width:100%;height:100%;border:0;display:block}
+.vp-stats{display:flex;align-items:center;gap:14px;margin:10px 2px 6px;font-size:12px;font-weight:800;color:var(--muted)}
+.vp-stats b{display:block;color:var(--cream);font-size:15px}.vp-stats .sp{flex:1}
+.vp-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden;margin:0 2px}
+.vp-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ember),var(--ember-hi));transition:width .3s}
+.vp-line{display:block;min-height:96px;margin-top:14px;padding:14px 12px;border-radius:18px;text-align:center;font-size:23px;font-weight:800;line-height:1.55;
+  background:linear-gradient(180deg,rgba(18,28,50,.78),rgba(12,20,38,.72));border:1px solid rgba(255,255,255,.08);word-spacing:.12em}
+.vp-line .w{display:inline;color:rgba(255,244,224,.38);white-space:nowrap}
+.vp-line .w.auto{color:rgba(255,244,224,.72)}
+.vp-line .w.done{color:#8fe3c8}
+.vp-line .w.cur{color:var(--cream);box-shadow:inset 0 -3px 0 var(--ember);border-radius:3px}
+.vp-line .w .ok{color:#8fe3c8}.vp-line .w .bad{color:#fff;background:#d9443a;border-radius:3px}
+.vp-line .w .vdots{letter-spacing:.08em}
+.vp-line.watch .w{color:var(--cream)}
+.vp-line.vfl{animation:vflash .45s}
+@keyframes vflash{0%{border-color:rgba(143,227,200,.9);box-shadow:0 0 24px rgba(143,227,200,.35)}100%{border-color:rgba(255,255,255,.08)}}
+.vp-ru{margin-top:8px;text-align:center;font-size:14.5px;font-weight:600;color:var(--muted);min-height:20px}
+.vp-in{width:100%;height:52px;margin-top:12px;border-radius:16px;border:1px solid rgba(255,160,80,.35);background:rgba(10,16,30,.7);
+  color:var(--cream);font:inherit;font-size:19px;font-weight:700;text-align:center;outline:none}
+.vp-in:focus{border-color:var(--ember-hi);box-shadow:0 0 0 3px rgba(255,180,90,.15)}
+.vp-in.bad{color:#ff8f86}
+.vp-ctl{display:flex;gap:8px;margin-top:12px}
+.vp-ctl button{flex:1;height:46px;border-radius:14px;border:1px solid rgba(255,160,80,.3);background:var(--glass);color:var(--cream);font:inherit;font-size:18px;cursor:pointer}
+.vp-ctl button:active{transform:scale(.95)}
+.vp-ctl button.on{background:linear-gradient(180deg,rgba(255,150,60,.35),rgba(255,120,40,.15))}
+.vp-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.vp-opts button,.vp-opts select{height:34px;padding:0 11px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(10,16,30,.6);
+  color:var(--muted);font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
+.vp-opts button.on{color:var(--cream);border-color:rgba(255,160,80,.45);background:rgba(255,140,50,.18)}
+.vp-opts select option{background:#101a30;color:var(--cream)}
+.vp-wait{margin-top:8px;text-align:center;font-size:12.5px;font-weight:700;color:var(--ember-hi);min-height:18px}
+.vtr{margin-top:6px}
+.vtr p{display:flex;gap:10px;padding:8px 4px;border-top:1px solid rgba(255,255,255,.06);font-size:14.5px;line-height:1.45;cursor:pointer}
+.vtr p:first-child{border-top:none}
+.vtr p small{flex:none;width:38px;color:var(--muted);font-weight:800;font-size:11.5px;padding-top:3px}
+.vtr p.now{color:var(--ember-hi)}.vtr p.ok span{color:#8fe3c8}
+.vtr p span i{display:block;font-style:normal;color:var(--muted);font-size:13px}
+.vdone{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(4,8,18,.72);backdrop-filter:blur(6px)}
+.vdone.on{display:flex}
+.vdone .card{width:100%;max-width:380px;text-align:center}
+.vdone .big{display:flex;justify-content:center;gap:22px;margin:14px 0}
+.vdone .big div{font-size:12px;font-weight:800;color:var(--muted)}.vdone .big b{display:block;font-size:30px;color:var(--cream)}
 </style>
 </head>
 <body>
@@ -455,6 +509,11 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
       <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v18M17 3v18M7 7.5h10M7 12h10M7 16.5h10"/></svg></span>
       <span><div class="t">Ladder</div><div class="s">Запомни кусок → перескажи</div></span>
       <span class="lock" id="ldBadge" style="color:var(--ember-hi);border-color:rgba(255,160,80,.4)">🧗</span>
+    </button>
+    <button class="btn slim" style="animation-delay:.48s" data-go="video">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg></span>
+      <span><div class="t">Video Type</div><div class="s">Печатай за YouTube → слышишь живую речь</div></span>
+      <span class="lock" style="color:var(--ember-hi);border-color:rgba(255,160,80,.4)">🎬</span>
     </button>
 
     <button class="btn slim" style="animation-delay:.48s" data-go="book">
@@ -540,6 +599,40 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 </section>
 
 <!-- ===== LADDER ===== -->
+<!-- ===== VIDEO TYPE: library ===== -->
+<section class="view" id="video">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2>VIDEO</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
+  <div class="scroll nodock" id="vscroll"></div>
+</section>
+
+<!-- ===== VIDEO TYPE: player ===== -->
+<section class="view" id="vplay">
+  <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2 id="vpTitle">TYPE</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
+  <div class="scroll nodock" id="vpScroll">
+    <div class="vp-video" id="vpVideo"><div id="ytbox"></div></div>
+    <div class="vp-stats"><div>LINE<b id="vpLine">0/0</b></div><div>WPM<b id="vpWpm">0</b></div><div>ACCURACY<b id="vpAcc">100%</b></div><span class="sp"></span><div style="text-align:right">TIME<b id="vpTime">0:00</b></div></div>
+    <div class="vp-bar"><i id="vpBar"></i></div>
+    <div class="vp-line" id="vpText"></div>
+    <div class="vp-ru" id="vpRu"></div>
+    <input class="vp-in" id="vpIn" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="next" placeholder="Type here…">
+    <div class="vp-wait" id="vpWait"></div>
+    <div class="vp-ctl">
+      <button data-vc="prev" aria-label="Previous line">⏮</button><button data-vc="play" id="vpPlay" aria-label="Play or pause">▶</button>
+      <button data-vc="replay" aria-label="Replay line">↻</button><button data-vc="hint" aria-label="Hint: next letter">💡</button><button data-vc="next" aria-label="Skip line">⏭</button>
+    </div>
+    <div class="vp-opts">
+      <select id="vpMode" aria-label="Practice mode"><option value="type">⌨️ Type along</option><option value="fill">🧩 Fill gaps</option><option value="write">🎧 Dictation</option><option value="watch">👀 Watch</option></select>
+      <select id="vpDens" aria-label="Words to type"><option value="full">All words</option><option value="mod">~55% words</option><option value="light">~35% words</option><option value="first">First letters</option></select>
+      <select id="vpRate" aria-label="Speed"><option value="1">1×</option><option value="0.85">0.85×</option><option value="0.75">0.75×</option><option value="0.5">0.5×</option></select>
+      <button data-vo="ru">RU</button><button data-vo="loop">🔁 Auto-replay</button><button data-vo="sound">🔊</button><button data-vo="small">📺 Small video</button>
+    </div>
+    <section class="card" style="margin-top:14px"><h3>Transcript</h3><div class="vtr" id="vpTr"></div></section>
+  </div>
+  <div class="vdone" id="vpDone"><div class="card"><div class="hero"><div class="emo">🎬🔥</div><div class="praise" id="vdTitle">Video done!</div></div>
+    <div class="big"><div><b id="vdWpm">0</b>WPM</div><div><b id="vdAcc">0%</b>ACCURACY</div><div><b id="vdXp">+0</b>XP</div></div>
+    <div class="btnrow"><button class="bigbtn" id="vdAgain">🔁 Again</button><button class="bigbtn main" id="vdBack">Done</button></div></div></div>
+</section>
+
 <section class="view" id="ladder">
   <div class="vhead"><button class="iconbtn back" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><h2>LADDER</h2><span class="sp"></span><span class="pill">🔥 <b class="js-streak">0</b></span></div>
   <div class="scroll nodock" id="lscroll"></div>
@@ -591,6 +684,10 @@ function errText(e){
   if (m === "forbidden") return "Нет доступа — откройте приложение через бота";
   if (m === "location") return "Gemini недоступен из текущей страны — проверьте VPN";
   if (m === "too_short") return "Слишком коротко — скажите хотя бы пару фраз";
+  if (m === "no_words") return "В файле не нашлось английских слов";
+  if (m === "too_big") return "Файл слишком большой";
+  if (m === "timeout") return "Сервер долго думает — попробуйте открыть видео ещё раз через минуту";
+  if (m === "not_found") return "Видео не найдено — добавьте его заново";
   if (m === "bad_youtube") return "Не похоже на ссылку YouTube — скопируйте её через «Поделиться» в YouTube";
   if (m.startsWith("Failed to fetch") || m.includes("NetworkError") || m.includes("Load failed")) return "Адрес сервера обновился — закройте приложение и откройте его кнопкой «🔥 Open Camp English» в чате с ботом";
   return "Не получилось — попробуйте ещё раз";
@@ -647,6 +744,7 @@ function goBack(){
   if (current === "speak" && rec.state !== "idle") { rec.cancel(); }
   stopAudio();
   if (current === "ladder" && LP) { LP = null; LRES = null; renderLadderHome(); return; }
+  if (current === "vplay") vLeave();
   show(stack.pop() || "home");
 }
 function goHome(){ stack = []; stopAudio(); show("home"); }
@@ -986,7 +1084,7 @@ function renderCard(){
 
 /* ---------- Trail ---------- */
 const RANK_EMOJI = ["🥾","⛺","🥾","🧭","🌲","🏔","🌌","🔥"];
-const KIND = { speak:["🎙","Speaking"], write:["✍️","Writing"], chat:["💬","Telegram chat"], book:["📖","Book page"], ladder:["🧗","Ladder retell"] };
+const KIND = { speak:["🎙","Speaking"], write:["✍️","Writing"], chat:["💬","Telegram chat"], book:["📖","Book page"], ladder:["🧗","Ladder retell"], video:["🎬","Video Type"] };
 let TRAIL = null;
 OPEN.trail = async () => {
   const el = document.getElementById("tscroll"); loading(el);
@@ -1333,6 +1431,358 @@ lsc().addEventListener("click", async e => {
 });
 
 /* ================= demo mode (?demo) ================= */
+/* ---------- Video Type: type along with YouTube videos ---------- */
+var VL = null, VBUSY = false, vUrl = "", vNeedFile = false;
+const vsc = () => document.getElementById("vscroll");
+let VO = { mode: "type", dens: "full", rate: "1", ru: false, loop: false, sound: false, small: false };
+try { Object.assign(VO, JSON.parse(localStorage.getItem("camp_vt") || "{}")); } catch(e) {}
+const vSaveOpts = () => { try { localStorage.setItem("camp_vt", JSON.stringify(VO)); } catch(e) {} };
+const ytThumb = id => `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+const fmtT = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
+const vPost = (path, body, type) => api(path, { method: "POST", headers: { "Content-Type": type || "application/json" }, body: type ? body : JSON.stringify(body) });
+
+OPEN.video = () => loadVideos();
+async function loadVideos(){
+  const el = vsc(); if (!VL) loading(el); else renderVideos();
+  try { const j = await api("/api/videos"); VL = j.videos || []; renderVideos(); } catch(e) { if (!VL) failed(el, e); }
+}
+function renderVideos(){
+  const el = vsc(), list = VL || [];
+  const rows = list.map(v => {
+    const b = (v.best || {}).type || Object.values(v.best || {})[0];
+    return `<div class="vrow"><img src="${ytThumb(v.yt)}" alt="" data-vopen="${esc(v.yt)}" loading="lazy">
+      <div class="tx" data-vopen="${esc(v.yt)}"><b>${esc(v.title || "Video")}</b><i>${v.lines || 0} lines${b ? ` · best ${b.wpm} WPM · ${b.acc}%` : ""}${v.runs ? ` · done ${v.runs}×` : ""}</i></div>
+      <button class="smallbtn" data-vdel="${esc(v.yt)}" aria-label="Delete">✕</button></div>`;
+  }).join("");
+  el.innerHTML = `
+    <section class="card"><h3>Add a YouTube video</h3>
+      <p class="tipline">Ссылка на ролик с английской речью или песней. Субтитры подтянутся сами, а если их нет — бот распознает слова.</p>
+      <div class="vadd" style="margin-top:10px"><input class="lin" id="vUrl" inputmode="url" placeholder="https://youtu.be/…" value="${esc(vUrl)}">
+        <button class="bigbtn main" id="vAdd" style="flex:none;width:92px;height:44px" ${VBUSY ? "disabled" : ""}>${VBUSY ? "🔥" : "Add"}</button></div>
+      ${VBUSY ? `<p class="tipline" style="margin-top:10px;color:var(--ember-hi)">🔥 ${VBUSY === "upload" ? "Слушаю файл и расставляю слова по времени…" : "Готовлю строки и перевод…"} Обычно до минуты.</p>` : ""}
+      ${vNeedFile && !VBUSY ? `<p class="tipline" style="margin-top:12px;color:var(--cream)">У ролика нет субтитров, и открыть его по ссылке не вышло (так бывает с видео «по ссылке»). Загрузи файл этого же видео или аудио — бот распознает слова и привяжет их ко времени ролика.</p>
+        <label class="bigbtn" style="margin-top:10px;display:flex;align-items:center;justify-content:center">📁 Choose video or audio file<input type="file" id="vFile" accept="video/*,audio/*" hidden></label>` : ""}
+    </section>
+    <section class="card"><h3>My videos</h3>${rows || `<p class="tipline">Пока пусто. Добавь первый ролик выше.</p>`}</section>
+    <section class="card"><h3>How to practice</h3>
+      <p class="tipline">⌨️ <b>Type along</b> — текст виден, печатаешь за видео. 🧩 <b>Fill gaps</b> — часть слов спрятана. 🎧 <b>Dictation</b> — текст скрыт, печатаешь на слух: самый полезный режим. 👀 <b>Watch</b> — просто смотришь с субтитрами.</p>
+      <p class="tipline" style="margin-top:8px">Видео ждёт, пока допечатаешь строку. ↻ — переслушать, 💡 — подсказать букву. Перед тем как печатать, повтори строку вслух. Один ролик 2–3 дня подряд лучше, чем каждый день новый.</p>
+    </section>`;
+}
+function vAdded(j){
+  VBUSY = false; vNeedFile = false; vUrl = "";
+  const v = j.video;
+  VL = [Object.assign({ yt: v.yt, title: v.title }, j.stats || {}, { lines: v.lines.length })].concat((VL || []).filter(x => x.yt !== v.yt));
+  notify("success"); vOpen(v, j.stats);
+}
+async function vWait(j){
+  for (let k = 0; j.pending && k < 45; k++) {
+    await new Promise(r => setTimeout(r, 4000));
+    j = await vPost("/api/video/add", { url: vUrl.trim() });
+  }
+  if (j.pending) throw new Error("timeout");
+  return j;
+}
+async function vAdd(){
+  if (VBUSY) return;
+  if (!/youtu\.?be/i.test(vUrl)) { toast("Вставьте ссылку на ролик YouTube"); return; }
+  VBUSY = "add"; vNeedFile = false; renderVideos(); haptic("medium");
+  try { vAdded(await vWait(await vPost("/api/video/add", { url: vUrl.trim() }))); }
+  catch(e) {
+    VBUSY = false;
+    if (String(e.message) === "no_subs") { vNeedFile = true; renderVideos(); notify("warning"); }
+    else { renderVideos(); toast(errText(e), 3500); notify("error"); }
+  }
+}
+async function vUpload(file){
+  if (!file || VBUSY) return;
+  if (file.size > 75 * 1024 * 1024) { toast("Файл слишком большой — нужно до 75 МБ"); return; }
+  VBUSY = "upload"; renderVideos(); haptic("medium");
+  try { vAdded(await vWait(await vPost("/api/video/upload?url=" + encodeURIComponent(vUrl.trim()), file, file.type || "video/mp4"))); }
+  catch(e) { VBUSY = false; renderVideos(); toast(errText(e), 3500); notify("error"); }
+}
+async function vOpenId(yt){
+  try { const j = await api("/api/video?yt=" + encodeURIComponent(yt)); vOpen(j.video, j.stats); }
+  catch(e) { toast(errText(e)); }
+}
+vsc().addEventListener("input", e => { if (e.target.id === "vUrl") vUrl = e.target.value; });
+vsc().addEventListener("change", e => { if (e.target.id === "vFile") vUpload(e.target.files[0]); });
+vsc().addEventListener("keydown", e => { if (e.target.id === "vUrl" && e.key === "Enter") { e.preventDefault(); vAdd(); } });
+vsc().addEventListener("click", async e => {
+  const t = e.target.closest("[data-vopen],[data-vdel],#vAdd"); if (!t) return;
+  if (t.id === "vAdd") return vAdd();
+  if (t.dataset.vopen) { haptic(); return vOpenId(t.dataset.vopen); }
+  const yt = t.dataset.vdel;
+  if (!t.classList.contains("arm")) { t.classList.add("arm"); t.textContent = "delete?"; setTimeout(() => { t.classList.remove("arm"); t.textContent = "✕"; }, 2500); return; }
+  haptic("medium"); VL = VL.filter(x => x.yt !== yt); renderVideos();
+  try { await vPost("/api/video/remove", { yt }); } catch(x) {}
+});
+
+/* --- player --- */
+let VP = null, ytP = null, ytReady = false, ytApiP = null, vTick = 0, vAC = null;
+const vIn = document.getElementById("vpIn"), $v = id => document.getElementById(id);
+function ytApi(){
+  if (window.YT && YT.Player) return Promise.resolve();
+  if (!ytApiP) ytApiP = new Promise((res, rej) => {
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => { if (prev) try { prev(); } catch(e) {} res(); };
+    const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; s.onerror = () => { ytApiP = null; rej(new Error("yt")); };
+    document.head.appendChild(s);
+  });
+  return ytApiP;
+}
+const vNow = () => { try { return ytP && ytReady ? ytP.getCurrentTime() || 0 : 0; } catch(e) { return 0; } };
+const vPlaying = () => { try { return ytReady && ytP.getPlayerState() === 1; } catch(e) { return false; } };
+function vSeek(t){ if (!ytReady) return; VP.ignoreUntil = Date.now() + 900; try { ytP.seekTo(Math.max(0, t), true); } catch(e) {} }
+function vPlay(){ if (ytReady) try { ytP.playVideo(); } catch(e) {} }
+function vPause(){ if (ytReady) try { ytP.pauseVideo(); } catch(e) {} }
+const vKey = t => String(t).toLowerCase().replace(/[’‘`´]/g, "'").replace(/[^a-z0-9'À-ɏ]/g, "");
+const vBare = t => vKey(t).replace(/'/g, "");
+const vParts = val => String(val || "").replace(/^[^a-z0-9À-ɏ]+/i, "").split(/\s+/);
+function vHash(a, b){ let h = Math.imul(a + 1, 2654435761) ^ Math.imul(b + 7, 40503); h ^= h >>> 15; h = Math.imul(h, 2246822519); h ^= h >>> 13; return ((h >>> 0) % 1000) / 1000; }
+
+function vBuild(i){
+  const L = VP.v.lines[i], toks = L.en.split(/\s+/).filter(Boolean);
+  let share = { full: 1, mod: .55, light: .35, first: 1 }[VO.dens] || 1;
+  if (VO.mode === "fill" && share === 1 && VO.dens !== "first") share = .4;
+  const words = toks.map((t, k) => {
+    const full = vBare(t), need = !!full && VO.mode !== "watch" && (share >= 1 || vHash(i, k) < share);
+    return { t, full, key: VO.dens === "first" ? full.slice(0, 1) : full, need, done: !need };
+  });
+  if (VO.mode !== "watch" && !words.some(w => w.need)) {
+    let best = null; words.forEach(w => { if (w.full && (!best || w.full.length > best.full.length)) best = w; });
+    if (best) { best.need = true; best.done = false; }
+  }
+  return words;
+}
+function vNextWord(){ VP.wi = VP.words.findIndex(w => w.need && !w.done); }
+function vSetLine(i){
+  const n = VP.v.lines.length; i = Math.max(0, Math.min(n - 1, i));
+  VP.i = i; VP.words = vBuild(i); vNextWord(); VP.waiting = false; VP.prevHead = ""; vIn.value = "";
+  clearTimeout(VP.replayT);
+  try { localStorage.setItem("camp_vt_pos_" + VP.v.yt, JSON.stringify({ i })); } catch(e) {}
+  $v("vpLine").textContent = (i + 1) + "/" + n;
+  $v("vpBar").style.width = Math.round(VP.done.size / n * 100) + "%";
+  vRender(); vMarkTranscript();
+}
+function vColor(w, typed, hide){
+  let j = 0, out = "";
+  for (const ch of w.t) {
+    if (!/[a-z0-9À-ɏ]/i.test(ch)) { out += esc(ch); continue; }
+    if (j < typed.length) out += `<span class="${typed[j] === w.full[j] ? "ok" : "bad"}">${esc(hide && typed[j] !== w.full[j] ? typed[j] : ch)}</span>`;
+    else out += hide ? "•" : esc(ch);
+    j++;
+  }
+  if (typed.length > w.full.length) out += `<span class="bad">${esc(typed.slice(w.full.length))}</span>`;
+  return out;
+}
+function vRender(){
+  if (!VP) return;
+  const el = $v("vpText"), mode = VO.mode, typed = vBare(vParts(vIn.value)[0] || "");
+  el.classList.toggle("watch", mode === "watch");
+  el.innerHTML = VP.words.map((w, k) => {
+    const cur = k === VP.wi, hide = w.need && !w.done && (mode === "fill" || mode === "write");
+    const inner = cur ? vColor(w, typed, hide) : hide ? `<span class="vdots">${"•".repeat(Math.max(1, w.full.length))}</span>${esc(w.t.replace(/^.*[a-z0-9À-ɏ]/i, ""))}` : esc(w.t);
+    return `<span class="w${w.done ? (w.need ? " done" : " auto") : ""}${cur ? " cur" : ""}">${inner}</span>`;
+  }).join(" ");
+  const L = VP.v.lines[VP.i] || {};
+  $v("vpRu").textContent = VO.ru && L.ru ? L.ru : "";
+  vIn.classList.toggle("bad", !!typed && VP.wi >= 0 && !VP.words[VP.wi].key.startsWith(typed));
+}
+function vStats(){
+  const acc = VP.ok + VP.bad ? Math.round(VP.ok / (VP.ok + VP.bad) * 100) : 100;
+  const wpm = VP.active > 3000 ? Math.round(VP.chars / 5 / (VP.active / 60000)) : 0;
+  $v("vpWpm").textContent = wpm; $v("vpAcc").textContent = acc + "%";
+  return { acc, wpm };
+}
+function vBeep(bad){
+  if (!VO.sound) return;
+  try {
+    vAC = vAC || new (window.AudioContext || window.webkitAudioContext)();
+    const o = vAC.createOscillator(), g = vAC.createGain(), t = vAC.currentTime;
+    o.type = bad ? "square" : "triangle"; o.frequency.value = bad ? 150 : 1300;
+    g.gain.setValueAtTime(bad ? .05 : .025, t); g.gain.exponentialRampToValueAtTime(.0001, t + (bad ? .16 : .045));
+    o.connect(g); g.connect(vAC.destination); o.start(t); o.stop(t + .18);
+  } catch(e) {}
+}
+function vProcess(){
+  if (!VP || VP.finished) return;
+  let val = vIn.value;
+  for (let guard = 0; guard < 30 && VP.wi >= 0; guard++) {
+    const w = VP.words[VP.wi], parts = vParts(val), head = vBare(parts[0] || "");
+    if (head.length > VP.prevHead.length) {
+      for (let j = VP.prevHead.length; j < head.length; j++) {
+        if (head[j] === w.key[j]) VP.ok++; else { VP.bad++; haptic("rigid"); vBeep(true); }
+      }
+      if (head.length && head === w.key.slice(0, head.length)) vBeep(false);
+    }
+    VP.prevHead = head;
+    if (head && head === w.key) {
+      w.done = true; VP.chars += w.full.length + 1; VP.prevHead = "";
+      val = parts.slice(1).join(" "); vIn.value = val; vNextWord();
+      if (VP.wi < 0) { vLineDone(); return; }
+      continue;
+    }
+    break;
+  }
+  vRender(); vStats();
+}
+vIn.addEventListener("input", () => {
+  if (!VP) return;
+  if (VO.mode === "watch") { vIn.value = ""; return; }
+  const now = Date.now(); if (VP.lastKey && now - VP.lastKey < 5000) VP.active += now - VP.lastKey; VP.lastKey = now;
+  if (!vPlaying() && !VP.waiting && !VP.userPaused) vPlay();
+  vProcess();
+});
+vIn.addEventListener("keydown", e => {
+  if (e.key === "Enter") { e.preventDefault(); return; }
+  if (e.key === "Escape") { e.preventDefault(); vToggle(); }
+});
+function vLineDone(){
+  VP.done.add(VP.i); haptic("light");
+  const el = $v("vpText"); el.classList.remove("vfl"); void el.offsetWidth; el.classList.add("vfl");
+  const nxt = VP.i + 1;
+  if (nxt >= VP.v.lines.length) { vStats(); vRender(); vMarkTranscript(); $v("vpBar").style.width = "100%"; vFinish(); return; }
+  const wasWaiting = VP.waiting || !vPlaying(), t = vNow();
+  vSetLine(nxt); vStats(); $v("vpWait").textContent = "";
+  if (wasWaiting && !VP.userPaused) { vSeek(VP.v.lines[nxt].s); vPlay(); }
+  else if (t > VP.v.lines[nxt].e) vSeek(VP.v.lines[nxt].s);
+}
+function vLineAt(t){
+  const L = VP.v.lines; let k = 0;
+  for (let i = 0; i < L.length; i++) if (L[i].s <= t + 0.05) k = i; else break;
+  return k;
+}
+function vLoop(){
+  if (!VP || !ytReady || current !== "vplay" || VP.finished) return;
+  const t = vNow(), L = VP.v.lines;
+  $v("vpTime").textContent = fmtT(t);
+  if (Date.now() > (VP.ignoreUntil || 0) && Math.abs(t - VP.lastT) > 2.5 && VP.lastT) {      // scrubbed in the player
+    const k = vLineAt(t); if (k !== VP.i) vSetLine(k);
+  }
+  VP.lastT = t;
+  if (VO.mode === "watch") { const k = vLineAt(t); if (k !== VP.i) vSetLine(k); return; }
+  const cur = L[VP.i];
+  if (cur && vPlaying() && t >= cur.e - 0.05 && Date.now() > (VP.ignoreUntil || 0)) {
+    vPause(); VP.waiting = true;
+    $v("vpWait").textContent = VO.mode === "write" ? "🎧 Допечатай, что услышал — ↻ переслушать, 💡 подсказка" : "⏸ Видео ждёт — допечатай строку";
+    if (VO.loop) { clearTimeout(VP.replayT); VP.replayT = setTimeout(() => { if (VP && VP.waiting && VO.loop && current === "vplay") { vSeek(cur.s); vPlay(); } }, 1500); }
+  }
+}
+function vState(s){
+  if (!VP) return;
+  $v("vpPlay").textContent = s === 1 ? "⏸" : "▶";
+  if (s === 1) { VP.waiting = false; VP.userPaused = false; if (VO.mode === "watch") $v("vpWait").textContent = ""; }
+}
+function vToggle(){
+  if (!VP) return;
+  if (vPlaying()) { VP.userPaused = true; vPause(); return; }
+  VP.userPaused = false;
+  const cur = VP.v.lines[VP.i];
+  if (VP.waiting && cur && VO.mode !== "watch") vSeek(cur.s);
+  vPlay();
+}
+function vFinishReset(){
+  Object.assign(VP, { ok: 0, bad: 0, chars: 0, active: 0, lastKey: 0, hints: 0, done: new Set(), finished: false, t0: Date.now() });
+}
+async function vOpen(v, stats){
+  if (!v || !v.lines || !v.lines.length) { toast("В этом видео нет строк"); return; }
+  VP = { v, stats: stats || {}, i: 0, words: [], wi: -1, prevHead: "", waiting: false, userPaused: false, lastT: 0, ignoreUntil: 0, replayT: 0 };
+  vFinishReset();
+  let start = 0;
+  try { const p = JSON.parse(localStorage.getItem("camp_vt_pos_" + v.yt) || "null"); if (p && p.i > 0 && p.i < v.lines.length) start = p.i; } catch(e) {}
+  $v("vpTitle").textContent = "TYPE"; $v("vpDone").classList.remove("on"); $v("vpWait").textContent = start ? "Продолжаем с места, где остановился. ⏮ — назад." : "";
+  vSyncOpts(); renderTranscript(); vSetLine(start); vStats();
+  stack = ["home", "video"]; show("vplay"); $v("vpScroll").scrollTop = 0;
+  $v("vpVideo").innerHTML = '<div id="ytbox"></div>';
+  if (ytP) { try { ytP.destroy(); } catch(e) {} ytP = null; }
+  ytReady = false; clearInterval(vTick);
+  try { await ytApi(); } catch(e) { toast("YouTube не загрузился — проверьте интернет"); return; }
+  if (!VP || VP.v !== v) return;
+  ytP = new YT.Player("ytbox", { videoId: v.yt, width: "100%", height: "100%",
+    playerVars: { playsinline: 1, rel: 0, modestbranding: 1, controls: 1, disablekb: 1, fs: 0, iv_load_policy: 3, cc_load_policy: 0, start: Math.floor(v.lines[start].s) },
+    events: { onReady: () => { ytReady = true; try { ytP.setPlaybackRate(+VO.rate); } catch(e) {} },
+              onStateChange: e => vState(e.data),
+              onError: e => toast(e.data === 101 || e.data === 150 ? "Автор запретил показ этого видео в других приложениях" : "YouTube не может показать это видео", 3500) } });
+  vTick = setInterval(vLoop, 100);
+}
+function vLeave(){
+  clearInterval(vTick); vPause(); if (VP) clearTimeout(VP.replayT);
+  $v("vpDone").classList.remove("on"); vIn.blur();
+  if (VL) renderVideos();
+}
+async function vFinish(){
+  VP.finished = true; vPause(); clearTimeout(VP.replayT);
+  const { acc, wpm } = vStats();
+  try { localStorage.removeItem("camp_vt_pos_" + VP.v.yt); } catch(e) {}
+  $v("vdTitle").textContent = VP.v.title || "Video done!"; $v("vdWpm").textContent = wpm; $v("vdAcc").textContent = acc + "%"; $v("vdXp").textContent = "…";
+  $v("vpDone").classList.add("on"); vIn.blur(); notify("success");
+  try {
+    const j = await vPost("/api/video/done", { yt: VP.v.yt, wpm, acc, lines: VP.done.size, seconds: (Date.now() - VP.t0) / 1000, mode: VO.mode });
+    $v("vdXp").textContent = "+" + ((j.summary && j.summary.gained) || 0);
+    if (j.summary) setProgress(j.summary);
+    if (VL && j.stats) VL = VL.map(x => x.yt === VP.v.yt ? Object.assign({}, x, j.stats) : x);
+  } catch(e) { $v("vdXp").textContent = "—"; }
+}
+function renderTranscript(){
+  const hide = VO.mode === "fill" || VO.mode === "write";
+  $v("vpTr").innerHTML = VP.v.lines.map((L, i) => `<p data-vl="${i}"><small>${fmtT(L.s)}</small><span>${hide && !VP.done.has(i) ? "· · ·" : esc(L.en)}${VO.ru && L.ru && (!hide || VP.done.has(i)) ? `<i>${esc(L.ru)}</i>` : ""}</span></p>`).join("");
+}
+function vMarkTranscript(){
+  const box = $v("vpTr"), hide = VO.mode === "fill" || VO.mode === "write";
+  box.querySelectorAll("p").forEach(p => {
+    const i = +p.dataset.vl, L = VP.v.lines[i];
+    p.classList.toggle("now", i === VP.i); p.classList.toggle("ok", VP.done.has(i));
+    if (hide && VP.done.has(i) && p.dataset.shown !== "1") { p.dataset.shown = "1"; p.querySelector("span").innerHTML = esc(L.en) + (VO.ru && L.ru ? `<i>${esc(L.ru)}</i>` : ""); }
+  });
+}
+function vSyncOpts(){
+  $v("vpMode").value = VO.mode; $v("vpDens").value = VO.dens; $v("vpRate").value = String(VO.rate);
+  $v("vpDens").style.display = VO.mode === "watch" ? "none" : "";
+  vIn.style.display = VO.mode === "watch" ? "none" : "";
+  document.querySelector('[data-vc="hint"]').style.display = VO.mode === "watch" ? "none" : "";
+  document.querySelectorAll("[data-vo]").forEach(b => b.classList.toggle("on", !!VO[b.dataset.vo]));
+  document.querySelector('[data-vo="sound"]').textContent = VO.sound ? "🔊 Sound" : "🔇 Sound";
+  $v("vpVideo").classList.toggle("small", !!VO.small);
+}
+$v("vpMode").addEventListener("change", e => { VO.mode = e.target.value; vSaveOpts(); vSyncOpts(); if (VP) { renderTranscript(); vSetLine(VP.i); if (VO.mode === "watch") { $v("vpWait").textContent = ""; VP.userPaused = false; vPlay(); } } });
+$v("vpDens").addEventListener("change", e => { VO.dens = e.target.value; vSaveOpts(); if (VP) vSetLine(VP.i); });
+$v("vpRate").addEventListener("change", e => { VO.rate = e.target.value; vSaveOpts(); try { ytP && ytP.setPlaybackRate(+VO.rate); } catch(x) {} });
+document.querySelectorAll("[data-vo]").forEach(b => b.addEventListener("click", () => {
+  const k = b.dataset.vo; VO[k] = !VO[k]; vSaveOpts(); vSyncOpts(); haptic();
+  if (k === "ru" && VP) { vRender(); renderTranscript(); vMarkTranscript(); }
+  if (k === "loop" && VO.loop && VP && VP.waiting) { const cur = VP.v.lines[VP.i]; vSeek(cur.s); vPlay(); }
+}));
+document.querySelectorAll("[data-vc]").forEach(b => {
+  b.addEventListener("pointerdown", e => e.preventDefault());           // keep the keyboard open
+  b.addEventListener("click", () => {
+    if (!VP) return; haptic(); const c = b.dataset.vc;
+    if (c === "play") return vToggle();
+    if (c === "replay") { VP.userPaused = false; vSeek(VP.v.lines[VP.i].s); vPlay(); return; }
+    if (c === "prev" || c === "next") { VP.userPaused = false; vSetLine(VP.i + (c === "prev" ? -1 : 1)); vSeek(VP.v.lines[VP.i].s); vPlay(); $v("vpWait").textContent = ""; return; }
+    if (c === "hint") {
+      const w = VP.words[VP.wi]; if (!w) return;
+      const head = vBare(vParts(vIn.value)[0] || ""); let k = 0;
+      while (k < head.length && head[k] === w.key[k]) k++;
+      vIn.value = w.key.slice(0, k + 1); VP.prevHead = vIn.value; VP.hints++; vProcess(); vIn.focus();
+    }
+  });
+});
+$v("vpTr").addEventListener("click", e => {
+  const p = e.target.closest("[data-vl]"); if (!p || !VP) return;
+  haptic(); VP.userPaused = false; vSetLine(+p.dataset.vl); vSeek(VP.v.lines[VP.i].s); vPlay(); $v("vpWait").textContent = "";
+  $v("vpScroll").scrollTo({ top: 0, behavior: "smooth" });
+});
+$v("vdAgain").addEventListener("click", () => { haptic("medium"); $v("vpDone").classList.remove("on"); vFinishReset(); renderTranscript(); vSetLine(0); vStats(); vSeek(VP.v.lines[0].s); vPlay(); });
+$v("vdBack").addEventListener("click", () => { haptic(); goBack(); });
+vIn.addEventListener("focus", () => setTimeout(() => $v("vpText").scrollIntoView({ block: "center", behavior: "smooth" }), 300));
+
+const DEMO_VIDEO = { yt: "at_f98qOGY0", title: "Demo video (made-up lines)", channel: "Demo", lines: [
+  { s: 2.0, e: 5.0, en: "This is a demo line, not the real words.", ru: "Это демо-строка, не настоящие слова." },
+  { s: 5.0, e: 9.5, en: "Type every word and the video keeps going.", ru: "Печатай каждое слово, и видео идёт дальше." },
+  { s: 9.5, e: 14.0, en: "If you stop, it waits for you at the end.", ru: "Если остановишься, оно подождёт тебя в конце." },
+  { s: 14.0, e: 19.0, en: "Don't worry about commas or capital letters.", ru: "Не переживай о запятых и заглавных буквах." } ] };
+const DEMO_VIDEOS = [{ yt: "at_f98qOGY0", title: "Demo video (made-up lines)", lines: 4, runs: 0, added: "2026-11-11" }];
 const DEMO_LADDER = { level: 2, good: 1, up_after: 3, min: 2, max: 6, due: ["d2"], summary: {}, pieces: [
   { id: "d1", title: "Late for Nothing", created: "2026-11-09", step: 0, due: "2026-11-09", reviews: [],
     lines: [{ en: "I was running late, so I grabbed my keys and headed for the door,", ru: "Я опаздывал, так что схватил ключи и направился к двери," },
@@ -1343,6 +1793,13 @@ const DEMO_LADDER = { level: 2, good: 1, up_after: 3, min: 2, max: 6, due: ["d2"
             { en: "because the rain had stopped and the sun came out at half past.", ru: "потому что дождь кончился и в половине выглянуло солнце." }],
     phrases: [{ phrase: "couldn't help but", ru: "не мог не", meaning: "had to, could not stop myself" }, { phrase: "came out", ru: "выглянуло", meaning: "appeared" }] } ] };
 async function demoApi(path, opts){
+  if (path.startsWith("/api/video")) {
+    await new Promise(r => setTimeout(r, 400));
+    if (path === "/api/videos") return { ok: true, videos: DEMO_VIDEOS.slice() };
+    if (path.startsWith("/api/video?") || path === "/api/video/add" || path.startsWith("/api/video/upload")) return { ok: true, video: DEMO_VIDEO, stats: DEMO_VIDEOS[0] };
+    if (path === "/api/video/done") return { ok: true, summary: { gained: 30 }, stats: Object.assign({}, DEMO_VIDEOS[0], { runs: 1, best: { type: { wpm: 31, acc: 96 } } }) };
+    return { ok: true };
+  }
   if (path.startsWith("/api/ladder")) {
     await new Promise(r => setTimeout(r, 500));
     if (path === "/api/ladder") return Object.assign({ ok: true }, DEMO_LADDER);

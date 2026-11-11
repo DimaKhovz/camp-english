@@ -480,6 +480,13 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
 .vdone{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(4,8,18,.72);backdrop-filter:blur(6px)}
 .vdone.on{display:flex}
 .vdone .card{width:100%;max-width:380px;text-align:center}
+.vdone .card.vedit{max-width:680px;text-align:left;max-height:calc(100vh - 40px);display:flex;flex-direction:column}
+.vedit .vehint{font-size:13px;line-height:1.45;color:var(--muted);margin:6px 0 10px}
+.vedit textarea{width:100%;flex:1;min-height:180px;height:46vh;resize:vertical;border-radius:14px;border:1px solid rgba(255,160,80,.35);background:rgba(10,16,30,.75);
+  color:var(--cream);font:inherit;font-size:15px;line-height:1.55;padding:10px 12px;outline:none}
+.vedit textarea:focus{border-color:var(--ember-hi)}
+.vedit .vemsg{min-height:20px;margin:8px 0 2px;font-size:13px;font-weight:700;color:var(--ember-hi)}
+.vedit .velink{margin-top:10px;background:none;border:0;color:var(--muted);font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;align-self:center}
 .vdone .big{display:flex;justify-content:center;gap:22px;margin:14px 0}
 .vdone .big div{font-size:12px;font-weight:800;color:var(--muted)}.vdone .big b{display:block;font-size:30px;color:var(--cream)}
 </style>
@@ -653,12 +660,21 @@ textarea::placeholder{color:rgba(255,244,224,.35)}
       <select id="vpMode" aria-label="Practice mode"><option value="type">⌨️ Type along</option><option value="fill">🧩 Fill gaps</option><option value="write">🎧 Dictation</option><option value="watch">👀 Watch</option></select>
       <select id="vpDens" aria-label="Words to type"><option value="full">All words</option><option value="mod">~55% words</option><option value="light">~35% words</option><option value="first">First letters</option></select>
       <select id="vpRate" aria-label="Speed"><option value="1">1×</option><option value="0.85">0.85×</option><option value="0.75">0.75×</option><option value="0.5">0.5×</option></select>
-      <button data-vo="ru">RU</button><button data-vo="loop">🔁 Auto-replay</button><button data-vo="sound">🔊</button><button data-vo="small">📺 Small video</button>
+      <button data-vo="ru">RU</button><button data-vo="loop">🔁 Auto-replay</button><button data-vo="sound">🔊</button><button data-vo="small">📺 Small video</button><button id="vpEdit" title="Исправить слова">✏️ Текст</button>
     </div></div>
     <div class="vp-keys">Клавиши: <b>Esc</b> пауза · <b>Tab</b> переслушать строку · <b>Ctrl+→ / Ctrl+←</b> следующая / предыдущая · <b>Ctrl+H</b> подсказка</div>
   </div><aside class="vp-side">
     <section class="card" style="margin-top:14px"><h3>Transcript</h3><div class="vtr" id="vpTr"></div></section>
   </aside></div>
+  <div class="vdone" id="vpEditBox"><div class="card vedit">
+    <h3>✏️ Текст видео</h3>
+    <p class="vehint">Исправь ошибки прямо здесь: одна строка поля — одна строка видео, время останется прежним.<br>
+    Или сотри всё и вставь правильный текст песни целиком (например, скопируй с сайта с текстами) — приложение само подгонит его под время в видео и переведёт.</p>
+    <textarea id="veText" spellcheck="false" autocomplete="off"></textarea>
+    <div class="vemsg" id="veMsg"></div>
+    <div class="btnrow"><button class="bigbtn" id="veCancel">Отмена</button><button class="bigbtn main" id="veSave">Сохранить</button></div>
+    <button class="velink" id="veRestore">↩ Вернуть автоматические субтитры</button>
+  </div></div>
   <div class="vdone" id="vpDone"><div class="card"><div class="hero"><div class="emo">🎬🔥</div><div class="praise" id="vdTitle">Video done!</div></div>
     <div class="big"><div><b id="vdWpm">0</b>WPM</div><div><b id="vdAcc">0%</b>ACCURACY</div><div><b id="vdXp">+0</b>XP</div></div>
     <div class="btnrow"><button class="bigbtn" id="vdAgain">🔁 Again</button><button class="bigbtn main" id="vdBack">Done</button></div></div></div>
@@ -717,6 +733,8 @@ function errText(e){
   if (m === "too_short") return "Слишком коротко — скажите хотя бы пару фраз";
   if (m === "no_words") return "В файле не нашлось английских слов";
   if (m === "too_big") return "Файл слишком большой";
+  if (m === "empty_text") return "Поле пустое — вставьте текст";
+  if (m === "align_failed") return "Не получилось подогнать этот текст под видео — проверьте, что это текст именно этой песни";
   if (m === "timeout") return "Сервер долго думает — попробуйте открыть видео ещё раз через минуту";
   if (m === "not_found") return "Видео не найдено — добавьте его заново";
   if (m === "bad_youtube") return "Не похоже на ссылку YouTube — скопируйте её через «Поделиться» в YouTube";
@@ -1826,6 +1844,41 @@ $v("vpTr").addEventListener("click", e => {
 });
 $v("vdAgain").addEventListener("click", () => { haptic("medium"); $v("vpDone").classList.remove("on"); vFinishReset(); renderTranscript(); vSetLine(0); vStats(); vSeek(VP.v.lines[0].s); vPlay(); });
 $v("vdBack").addEventListener("click", () => { haptic(); goBack(); });
+/* fix the words: same number of rows keeps timings, any other text is aligned to the video by AI */
+function vEditOpen(){
+  if (!VP) return;
+  VP.userPaused = true; clearTimeout(VP.replayT); vPause(); vIn.blur();
+  $v("veText").value = VP.v.lines.map(L => L.en).join("\n");
+  $v("veRestore").style.display = VP.v.auto_lines ? "" : "none";
+  $v("veMsg").textContent = ""; $v("vpEditBox").classList.add("on");
+}
+function vEditClose(){ $v("vpEditBox").classList.remove("on"); if (vDesktop() && VO.mode !== "watch") vIn.focus({ preventScroll: true }); }
+function vApplyVideo(j, msg){
+  const t = ytReady ? vNow() : (VP.v.lines[VP.i] || {}).s || 0;
+  VP.v = j.video; if (j.stats) VP.stats = j.stats;
+  if (VL) VL = VL.map(x => x.yt === j.video.yt ? Object.assign({}, x, { lines: j.video.lines.length, source: j.video.source }) : x);
+  vFinishReset(); renderTranscript(); vSetLine(Math.min(vLineAt(t), j.video.lines.length - 1)); vStats();
+  vEditClose(); toast(msg, 3200); notify("success");
+}
+async function vEditSend(path, body, wait, done){
+  const bs = [$v("veSave"), $v("veCancel"), $v("veRestore")];
+  bs.forEach(b => b.disabled = true); $v("veMsg").textContent = wait;
+  try { const j = await vPost(path, body); vApplyVideo(j, done(j)); }
+  catch(e) { $v("veMsg").textContent = errText(e); notify("error"); }
+  finally { bs.forEach(b => b.disabled = false); }
+}
+$v("vpEdit").addEventListener("click", () => { haptic(); vEditOpen(); });
+$v("veCancel").addEventListener("click", () => { haptic(); vEditClose(); });
+$v("veSave").addEventListener("click", () => {
+  const text = $v("veText").value, rows = text.split("\n").filter(r => r.trim()).length;
+  vEditSend("/api/video/text", { yt: VP.v.yt, text },
+    rows === VP.v.lines.length ? "Сохраняю и перевожу исправленные строки…" : "Подгоняю текст под видео — это до минуты…",
+    j => j.how === "aligned" ? "Готово: текст подогнан под видео. Если строка начинается не вовремя — поправь её тут же." : "Готово: текст исправлен");
+});
+$v("veRestore").addEventListener("click", () => {
+  if (!confirm("Вернуть автоматические субтитры YouTube? Твои исправления пропадут.")) return;
+  vEditSend("/api/video/restore", { yt: VP.v.yt }, "Возвращаю…", () => "Вернул автоматические субтитры");
+});
 vIn.addEventListener("focus", () => { if (!vDesktop()) setTimeout(() => $v("vpText").scrollIntoView({ block: "center", behavior: "smooth" }), 300); });
 
 const DEMO_VIDEO = { yt: "at_f98qOGY0", title: "Demo video (made-up lines)", channel: "Demo", lines: [
@@ -1848,6 +1901,11 @@ async function demoApi(path, opts){
     await new Promise(r => setTimeout(r, 400));
     if (path === "/api/videos") return { ok: true, videos: DEMO_VIDEOS.slice() };
     if (path.startsWith("/api/video?") || path === "/api/video/add" || path.startsWith("/api/video/upload")) return { ok: true, video: DEMO_VIDEO, stats: DEMO_VIDEOS[0] };
+    if (path === "/api/video/text") { const rows = JSON.parse(opts.body).text.split("\n").map(r => r.trim()).filter(Boolean);
+      DEMO_VIDEO.auto_lines = DEMO_VIDEO.auto_lines || DEMO_VIDEO.lines;
+      DEMO_VIDEO.lines = rows.map((en, i) => { const o = DEMO_VIDEO.auto_lines[Math.min(i, DEMO_VIDEO.auto_lines.length - 1)]; return { s: o.s + (i >= DEMO_VIDEO.auto_lines.length ? 3 * (i - DEMO_VIDEO.auto_lines.length + 1) : 0), e: o.e + (i >= DEMO_VIDEO.auto_lines.length ? 3 * (i - DEMO_VIDEO.auto_lines.length + 1) : 0), en, ru: "(перевод)" }; });
+      return { ok: true, video: Object.assign({}, DEMO_VIDEO), how: rows.length === DEMO_VIDEO.auto_lines.length ? "kept" : "aligned", stats: DEMO_VIDEOS[0] }; }
+    if (path === "/api/video/restore") { if (DEMO_VIDEO.auto_lines) { DEMO_VIDEO.lines = DEMO_VIDEO.auto_lines; delete DEMO_VIDEO.auto_lines; } return { ok: true, video: Object.assign({}, DEMO_VIDEO), stats: DEMO_VIDEOS[0] }; }
     if (path === "/api/video/done") return { ok: true, summary: { gained: 30 }, stats: Object.assign({}, DEMO_VIDEOS[0], { runs: 1, best: { type: { wpm: 31, acc: 96 } } }) };
     return { ok: true };
   }

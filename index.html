@@ -920,7 +920,7 @@ function drawWave(an){
     const bh = v * h, x = i*(bw+gap), y = (h - bh) / 2;
     const g = wctx.createLinearGradient(0, y, 0, y + bh); g.addColorStop(0, "#ffd27a"); g.addColorStop(1, "#e2531b");
     wctx.fillStyle = g; wctx.globalAlpha = data ? 1 : .35;
-    wctx.beginPath(); wctx.roundRect ? wctx.roundRect(x, y, bw, bh, bw/2) : wctx.rect(x, y, bw, bh); wctx.fill();
+    wctx.beginPath(); wctx.roundRect ? wctx.roundRect(x, y, Math.max(0, bw), bh, Math.max(0, bw/2)) : wctx.rect(x, y, bw, bh); wctx.fill();
   }
   wctx.globalAlpha = 1;
 }

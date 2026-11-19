@@ -971,13 +971,15 @@ wtext.addEventListener("input", () => {
 });
 wsend.addEventListener("click", async () => {
   haptic("medium"); wtext.blur(); busy("write", true);
+  const typed = wtext.value.trim();
   try {
     if (retellTarget) {
       const j = await api("/api/ladder/check?id=" + encodeURIComponent(retellTarget), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: wtext.value }) });
+      j.result = Object.assign({ transcript: typed }, j.result || {});
       busy("write", false); wtext.value = ""; wtext.dispatchEvent(new Event("input")); ladderResult(j); return;
     }
     const j = await api("/api/analyze" + analyzeQS(), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text: wtext.value }) });
-    busy("write", false); wtext.value = ""; wtext.dispatchEvent(new Event("input")); showResult(j.result, j.progress);
+    busy("write", false); wtext.value = ""; wtext.dispatchEvent(new Event("input")); showResult(Object.assign({}, j.result, { transcript: typed }), j.progress, { wrote: true });
   } catch(e) { busy("write", false); toast(errText(e), 3200); notify("error"); }
 });
 
@@ -997,7 +999,7 @@ function showResult(r, p, opts){
     ${p && p.quest_completed ? `<span class="pill">🏆 Quest done</span>` : ""}
     ${p && p.words_added && p.words_added.length ? `<span class="pill">🎒 +${p.words_added.length} words</span>` : ""}</div>
     ${questMode && p && !p.quest_completed ? `<p style="margin-top:10px;font-size:13px;font-weight:700;color:var(--muted)">Quest not done yet — use more of the target words and try again!</p>` : ""}</div>`;
-  if (r.transcript) h += card("You said", `<p class="said">“${esc(r.transcript)}”</p>`);
+  if (r.transcript) h += card(opts.wrote ? "You wrote" : "You said", `<p class="said">“${esc(r.transcript)}”</p>`, "", r.transcript);
   const ms = Array.isArray(r.mistakes) ? r.mistakes : [];
   h += card(ms.length ? "Fix these" : "Mistakes", ms.length ? ms.map(m => `<div class="fix"><div class="w">${esc(m.wrong)}</div><div class="r">${esc(m.right)}</div>${m.why ? `<div class="y">${esc(m.why)}</div>` : ""}</div>`).join("")
        : `<p>No mistakes — clean English! 🎯</p>`);
@@ -1395,7 +1397,7 @@ function ladderResultHTML(j){
       <div class="praise">${esc(r.praise || "")}</div>
       <div class="gain"><span class="pill">${g}</span>${sm.gained ? `<span class="pill">+${sm.gained} XP</span>` : ""}<span class="pill">📅 next: ${esc(lHuman(j.due))}</span>
       ${j.level_up ? `<span class="pill">🧗 Now ${j.level} sentences!</span>` : ""}${sm.words_added && sm.words_added.length ? `<span class="pill">🎒 +${sm.words_added.length} words</span>` : ""}</div></div>
-    ${r.transcript ? `<section class="card"><h3>You said</h3><p class="said">“${esc(r.transcript)}”</p></section>` : ""}
+    ${r.transcript ? `<section class="card"><h3>You said ${playBtn(r.transcript)}</h3><p class="said">“${esc(r.transcript)}”</p></section>` : ""}
     ${used.length || miss.length ? `<section class="card"><h3>Key phrases</h3><div class="chips3">${used.map(x => `<span>✓ ${esc(x)}</span>`).join("")}${miss.map(x => `<span class="miss">${esc(x)}</span>`).join("")}</div></section>` : ""}
     ${mi.length ? `<section class="card"><h3>You left out</h3>${mi.map(x => `<p class="tipline" style="color:var(--cream)">• ${esc(x)}</p>`).join("")}</section>` : ""}
     ${ms.length ? `<section class="card"><h3>Fix these</h3>${ms.map(m => `<div class="fix"><div class="w">${esc(m.wrong)}</div><div class="r">${esc(m.right)}</div>${m.why ? `<div class="y">${esc(m.why)}</div>` : ""}</div>`).join("")}</section>` : ""}
